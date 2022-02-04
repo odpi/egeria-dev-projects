@@ -33,7 +33,7 @@ import java.util.UUID;
  */
 public class ServerConfig
 {
-    private static String serverSecurityConnectorProviderClassName     = null; // "org.odpi.openmetadata.metadatasecurity.samples.CocoPharmaServerSecurityProvider";
+    private static String serverSecurityConnectorProviderClassName     = "org.odpi.openmetadata.metadatasecurity.samples.CocoPharmaServerSecurityProvider";
     private static String kafkaTopicsCaptureConnectorProviderClassName = "org.odpi.openmetadata.devprojects.connectors.integration.kafka.KafkaTopicsCaptureIntegrationProvider";
     private static String eventsDisplayConnectorProviderClassName      = "org.odpi.openmetadata.devprojects.connectors.auditlog.eventdisplay.EventDisplayAuditLogStoreProvider";
     private static String eventBusURLRoot = "localhost:9092"; // set to null to turn off all eventing to Kafka topics
