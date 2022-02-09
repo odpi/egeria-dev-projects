@@ -152,7 +152,7 @@
         <!-- Versions of dependent libraries -->
 
         <surefire.plugin.version>3.0.0-M5</surefire.plugin.version>
-        <testng.version>7.4.0</testng.version>
+        <testng.version>7.5</testng.version>
         <logback.version>1.2.10</logback.version>
         <kafka.version>3.0.0</kafka.version>
 
