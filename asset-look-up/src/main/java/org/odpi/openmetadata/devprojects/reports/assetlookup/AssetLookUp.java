@@ -8,8 +8,7 @@ import org.odpi.openmetadata.http.HttpHelper;
 
 
 /**
- * AssetLookUp illustrates the use of the Asset Consumer OMAS API to search for and
- * display the metadata linked to an Asset.
+ * AssetLookUp illustrates the use of the Asset Consumer OMAS API to search for and display the metadata linked to an Asset.
  */
 public class AssetLookUp
 {
@@ -63,6 +62,13 @@ public class AssetLookUp
 
             AssetUniverse assetUniverse = client.getAssetProperties(clientUserId, assetGUID);
 
+            if (assetUniverse != null)
+            {
+                System.out.println("qualifiedName: " + assetUniverse.getQualifiedName());
+                System.out.println("displayName: " + assetUniverse.getDisplayName());
+                System.out.println("description: " + assetUniverse.getDescription());
+            }
+
 
 
         }
@@ -78,28 +84,28 @@ public class AssetLookUp
      * The file name must be passed as parameter 1.  The other parameters are used to override the
      * sample's default values.
      *
-     * @param args 1. file name 2. server name, 3. URL root for the server, 4. client userId
+     * @param args 1. server name, 3. URL root for the server, 4. client userId
      */
     public static void main(String[] args)
     {
-        String  serverName = "cocoMDS2";
+        String  serverName = "mds1";
         String  serverURLRoot = "https://localhost:9443";
         String  clientUserId = "erinoverview";
 
 
+        if (args.length > 0)
+        {
+            serverName = args[0];
+        }
+
         if (args.length > 1)
         {
-            serverName = args[1];
+            serverURLRoot = args[1];
         }
 
         if (args.length > 2)
         {
-            serverURLRoot = args[2];
-        }
-
-        if (args.length > 3)
-        {
-            clientUserId = args[3];
+            clientUserId = args[2];
         }
 
         System.out.println("===============================");
@@ -117,12 +123,18 @@ public class AssetLookUp
             AssetLookUp assetLookUp = new AssetLookUp(serverName, serverURLRoot, clientUserId);
 
             String assetGUID = assetLookUp.locateAsset();
-            assetLookUp.displayAsset(assetGUID);
+
+            if (assetGUID != null)
+            {
+                assetLookUp.displayAsset(assetGUID);
+            }
         }
         catch (Exception  error)
         {
             System.out.println("Exception: " + error.getClass().getName() + " with message " + error.getMessage());
             System.exit(-1);
         }
+
+        System.out.println("Exiting ...");
     }
 }

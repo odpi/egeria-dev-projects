@@ -1204,8 +1204,7 @@ public class EgeriaPlatformReport
 
     /**
      * Main program that controls the operation of the platform report.  The parameters are passed space separated.
-     * The platforms URL root must be passed as parameter 1.  The other parameters are used to override the
-     * report's default values.
+     * They are used to override the report's default values.
      *
      * @param args 1. service platform URL root, 2. client userId, 3. server name,
      */

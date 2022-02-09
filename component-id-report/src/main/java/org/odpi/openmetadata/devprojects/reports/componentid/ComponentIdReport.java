@@ -198,7 +198,7 @@ public class ComponentIdReport
         {
             ComponentDescription componentDescription = report.get(componentId);
 
-            String reportLine = "|" + componentDescription.getComponentId() + "|" + componentDescription.getComponentName() + "|" + componentDescription.getComponentType() + "|" + componentDescription.getComponentWikiURL() + "|\n";
+            String reportLine = "| " + componentDescription.getComponentId() + " | " + componentDescription.getComponentName() + " | " + componentDescription.getComponentType() + " | " + componentDescription.getComponentWikiURL() + " |\n";
             fileOutStream.write(reportLine.getBytes());
             System.out.print(reportLine);
         }

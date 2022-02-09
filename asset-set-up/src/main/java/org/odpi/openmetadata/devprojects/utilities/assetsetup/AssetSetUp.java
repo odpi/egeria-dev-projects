@@ -20,13 +20,16 @@ import org.odpi.openmetadata.frameworks.connectors.ffdc.PropertyServerException;
 import org.odpi.openmetadata.frameworks.connectors.ffdc.UserNotAuthorizedException;
 import org.odpi.openmetadata.http.HttpHelper;
 
+import java.util.List;
+
 
 /**
- * AssetSetUp illustrates the use of the Governance Program OMAS API to create governance zones
- * for Coco Pharmaceuticals.
+ * AssetSetUp illustrates the use of the a variety of OMAS APIs to catalog a file in the open metadata ecosystem.
  */
 public class AssetSetUp
 {
+    private static final String fileName = "sample-data/oak-dene-drop-foot-weekly-measurements/week1.csv";
+
     private String serverName;
     private String serverURLRoot;
     private String clientUserId;
@@ -45,15 +48,15 @@ public class AssetSetUp
     private CapabilityManagerClient        capabilityManagerClient        = null;
 
     /**
-     * Set up the parameters for the sample.
+     * Set up the parameters for the utility.
      *
      * @param serverName server to call
      * @param serverURLRoot location of server
      * @param clientUserId userId to access the server
      */
-    public AssetSetUp(String serverName,
-                      String serverURLRoot,
-                      String clientUserId)
+    private AssetSetUp(String serverName,
+                       String serverURLRoot,
+                       String clientUserId)
     {
         this.serverName = serverName;
         this.serverURLRoot = serverURLRoot;
@@ -62,115 +65,70 @@ public class AssetSetUp
 
 
     /**
-     * Set up a new zone
-     *
-     * @param zoneName qualified name
-     * @param displayName display name
-     * @param description longer description
-     * @param criteria what types of assets are found in this zone
-     * @throws InvalidParameterException bad parameters passed to governanceZoneManager
-     * @throws UserNotAuthorizedException userId is not allowed to create zones
-     * @throws PropertyServerException service is not running - or is in trouble
+     * This runs the utility
      */
-    private void createZone(String     zoneName,
-                            String     displayName,
-                            String     description,
-                            String     criteria) throws InvalidParameterException,
-                                                        UserNotAuthorizedException,
-                                                        PropertyServerException
-    {
-        System.out.println("------------------------------------------------------------------------");
-        System.out.println(zoneName);
-        System.out.println("------------------------------------------------------------------------");
-        System.out.println(" ==> qualifiedName: " + zoneName);
-        System.out.println(" ==> displayName:   " + displayName);
-        System.out.println(" ==> description:   " + description);
-        System.out.println(" ==> criteria:      " + criteria);
-        System.out.println(" ");
-
-        GovernanceZoneProperties zoneProperties = new GovernanceZoneProperties();
-
-        zoneProperties.setQualifiedName(zoneName);
-        zoneProperties.setDisplayName(displayName);
-        zoneProperties.setDescription(description);
-        zoneProperties.setCriteria(criteria);
-
-        governanceZoneManager.createGovernanceZone(clientUserId, zoneProperties);
-    }
-
-
-    /**
-     * This runs the sample
-     */
-    public void run()
+    private void run()
     {
         try
         {
-            governanceZoneManager = new GovernanceZoneManager(serverName, serverURLRoot);
+            CSVFileAssetOwner client = new CSVFileAssetOwner(serverName, serverURLRoot);
 
-            GovernanceZoneSampleDefinitions[] zoneSampleDefinitions = GovernanceZoneSampleDefinitions.values();
+            List<String> assetGUIDs = client.addCSVFileToCatalog(clientUserId,
+                                                                 fileName,
+                                                                 "This is a new file asset created by AssetSetUp.",
+                                                                 fileName);
 
-            for (GovernanceZoneSampleDefinitions zoneDefinition : zoneSampleDefinitions)
-            {
-                createZone(zoneDefinition.getZoneName(),
-                           zoneDefinition.getDisplayName(),
-                           zoneDefinition.getDescription(),
-                           zoneDefinition.getCriteria());
-            }
-
-
+            System.out.println("New assets created: " +  assetGUIDs);
         }
         catch (Exception error)
         {
-            System.out.println("There was an exception when calling the GovernanceZoneManager governanceZoneManager.  Error message is: " + error.getMessage());
+            System.out.println("There was a " + error.getClass().getName() + " exception when calling the OMAG Server Platform.  Error message is: " + error.getMessage());
         }
     }
 
 
     /**
-     * Main program that controls the operation of the sample.  The parameters are passed space separated.
-     * The file name must be passed as parameter 1.  The other parameters are used to override the
-     * sample's default values.
+     * Main program that initiates the operation of the AssetSetUp utility.  The parameters are optional.  They are passed space separated.
+     * They are used to override the utility's default values.
      *
-     * @param args 1. file name 2. server name, 3. URL root for the server, 4. governanceZoneManager userId
+     * @param args 1. service platform URL root, 2. client userId, 3. server name
      */
     public static void main(String[] args)
     {
-        String  serverName = "cocoMDS2";
-        String  serverURLRoot = "https://localhost:9443";
+        String  platformURLRoot = "https://localhost:9443";
         String  clientUserId = "erinoverview";
+        String  serverName = "cocoMDS1";
 
+        if (args.length > 0)
+        {
+            platformURLRoot = args[0];
+        }
 
         if (args.length > 1)
         {
-            serverName = args[1];
+            clientUserId = args[1];
         }
 
         if (args.length > 2)
         {
-            serverURLRoot = args[2];
-        }
-
-        if (args.length > 3)
-        {
-            clientUserId = args[3];
+            serverName = args[2];
         }
 
         System.out.println("===============================");
-        System.out.println("Create Governance Zones Sample   ");
+        System.out.println("Asset Set Up Utility:          ");
         System.out.println("===============================");
-        System.out.println("Running against server: " + serverName + " at " + serverURLRoot);
+        System.out.println("Running against platform: " + platformURLRoot);
+        System.out.println("Focused on server: " + serverName);
         System.out.println("Using userId: " + clientUserId);
         System.out.println();
 
         HttpHelper.noStrictSSLIfConfigured();
 
-
         try
         {
-            AssetSetUp sample = new AssetSetUp(serverName, serverURLRoot, clientUserId);
+            AssetSetUp assetSetUp = new AssetSetUp(serverName, platformURLRoot, clientUserId);
 
-            sample.run();
+            assetSetUp.run();
         }
         catch (Exception  error)
         {
