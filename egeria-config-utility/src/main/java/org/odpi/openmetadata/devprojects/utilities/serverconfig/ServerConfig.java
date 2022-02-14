@@ -14,6 +14,7 @@ import org.odpi.openmetadata.adminservices.ffdc.exception.OMAGNotAuthorizedExcep
 import org.odpi.openmetadata.frameworks.connectors.properties.beans.Connection;
 import org.odpi.openmetadata.frameworks.connectors.properties.beans.ConnectorType;
 import org.odpi.openmetadata.http.HttpHelper;
+import org.odpi.openmetadata.platformservices.client.PlatformServicesClient;
 import org.odpi.openmetadata.repositoryservices.auditlog.OMRSAuditLogRecordSeverity;
 import org.odpi.openmetadata.repositoryservices.connectors.stores.auditlogstore.OMRSAuditLogStoreProviderBase;
 
@@ -56,6 +57,39 @@ public class ServerConfig
         this.platformURLRoot = platformURLRoot;
         this.clientUserId    = clientUserId;
     }
+
+
+    /**
+     * Retrieve the version of the platform.  This fails if the platform is not running or the endpoint is populated by a service that is not an
+     * OMAG Server Platform.
+     *
+     * @return platform version or null
+     */
+    private String getPlatformOrigin()
+    {
+        try
+        {
+            /*
+             * This client is from the platform services module and queries the runtime state of the platform and the servers that are running on it.
+             */
+            PlatformServicesClient platformServicesClient = new PlatformServicesClient("MyPlatform", platformURLRoot);
+
+            /*
+             * This is the first call to the platform and determines the version of the software.
+             * If the platform is not running, or the remote service is not an OMAG Server Platform,
+             * the utility fails at this point.
+             */
+            return platformServicesClient.getPlatformOrigin(clientUserId);
+        }
+        catch (Exception error)
+        {
+            System.out.println("\n\nThere was an " + error.getClass().getName() + " exception when calling the platform.  Error message is: " + error.getMessage());
+            System.out.println("Ensure the platform URl is correct and the platform is running");
+        }
+
+        return null;
+    }
+
 
 
     /**
@@ -135,7 +169,7 @@ public class ServerConfig
             MetadataAccessStoreConfigurationClient client = new MetadataAccessStoreConfigurationClient(clientUserId, serverName, platformURLRoot);
 
             client.setServerDescription("Metadata Access Store called " + serverName + " running on platform " + platformURLRoot);
-            client.setServerUserId(serverName + "npa");
+            client.setServerUserId("cocoMDS1npa");
             client.setServerType(null); // Let the admin service set up the server types
             client.setOrganizationName(organizationName);
             client.setMaxPageSize(maxPageSize);
@@ -234,7 +268,29 @@ public class ServerConfig
         {
             List<Connection> auditLogConnections = client.getOMAGServerConfig().getRepositoryServicesConfig().getAuditLogConnections();
 
-            System.out.println(auditLogConnections);
+            if (auditLogConnections == null)
+            {
+                System.out.println("Error: no audit log destinations");
+
+            }
+            else
+            {
+                System.out.println("Audit log destination are:");
+
+                for (Connection connection : auditLogConnections)
+                {
+                    if (connection != null)
+                    {
+                        System.out.print("| " + connection.getDisplayName() + " | ");
+                        if (connection.getConfigurationProperties() != null)
+                        {
+                            System.out.print("supported severities: " + connection.getConfigurationProperties().get(OMRSAuditLogStoreProviderBase.supportedSeveritiesProperty));
+                        }
+
+                        System.out.println(" | ");
+                    }
+                }
+            }
         }
         catch (Exception error)
         {
@@ -345,12 +401,14 @@ public class ServerConfig
                 connectorType.setConnectorProviderClassName(connectorProviderClassName);
             }
 
+
             eventDisplayConnection.setConnectorType(connectorType);
             eventDisplayConnection.setQualifiedName("Egeria:Sample:AuditLog:DisplayEventPayloadsOnConsole");
             eventDisplayConnection.setDisplayName("Display Event Payloads On Console Audit Log Destination");
 
             List<String> eventDisplaySupportedSeverities = new ArrayList<>();
             eventDisplaySupportedSeverities.add(OMRSAuditLogRecordSeverity.EVENT.getName());
+            this.setSupportedAuditLogSeverities(eventDisplaySupportedSeverities, eventDisplayConnection);
 
             client.addAuditLogDestination(eventDisplayConnection);
 
@@ -509,7 +567,7 @@ public class ServerConfig
     private void runCommand(String   mode,
                             String[] options)
     {
-        final String defaultAuditLogConnectorProvider = "package org.odpi.openmetadata.devprojects.connectors.auditlog.eventdisplay.EventDisplayAuditLogStoreProvider";
+        final String defaultAuditLogConnectorProvider = "org.odpi.openmetadata.devprojects.connectors.auditlog.eventdisplay.EventDisplayAuditLogStoreProvider";
         final String defaultTopicIntegrationConnectorProvider = "";
         final String defaultCohort = "dojoCohort";
 
@@ -534,7 +592,6 @@ public class ServerConfig
             {
                 System.out.println("  Error: include a server name for the integration daemon and the name of the metadata store that it is to connect to.");
             }
-
         }
         else if ("log-event-contents".equals(mode))
         {
@@ -633,13 +690,26 @@ public class ServerConfig
         System.out.println("===============================");
         System.out.println("OMAG Server Operations Utility:    " + new Date().toString());
         System.out.println("===============================");
-        System.out.println("Running against platform: " + platformURLRoot);
-        System.out.println("Using userId: " + clientUserId);
-        System.out.println();
+        System.out.print("Running against platform: " + platformURLRoot);
 
         ServerConfig utility = new ServerConfig(platformURLRoot, clientUserId);
 
         HttpHelper.noStrictSSLIfConfigured();
+
+        String platformOrigin = utility.getPlatformOrigin();
+
+        if (platformOrigin != null)
+        {
+            System.out.print(" - " + platformOrigin);
+        }
+        else
+        {
+            System.out.println();
+            System.exit(-1);
+        }
+
+        System.out.println("Using userId: " + clientUserId);
+        System.out.println();
 
         try
         {

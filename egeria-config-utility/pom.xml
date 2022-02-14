@@ -52,6 +52,11 @@
 
         <dependency>
             <groupId>org.odpi.egeria</groupId>
+            <artifactId>platform-services-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.odpi.egeria</groupId>
             <artifactId>http-helper</artifactId>
         </dependency>
 
