@@ -2,19 +2,12 @@
 <!-- Copyright Contributors to the Egeria project. -->
 
 
-# The Egeria Config Utility (egeria-config-utility)
+# The Asset Set Up Utility (asset-set-up)
 
-The Egeria config utility creates configuration documents for OMAG servers.  It has two modes
-of operation:
-
-* *Interactive* - the utility loops waiting for more commands.  It is designed to run
-  IntelliJ (or similar IDE) where it is available for new commands as you work with Egeria.
-  
-* *Command* - the utility takes parameters to describe the server and it is configured in a
-  single request.
+The *Asset Set Utility* creates a variety of assets that you can use to explore the open metadata and governance APIs.
 
 This utility works from a set of hard-coded defaults that you can change for your environment.  
-There is also plenty of scope to add new options to configure different types of servers and
+There is also plenty of scope to add new options to configure different types of assets and
 features.
 
 ----

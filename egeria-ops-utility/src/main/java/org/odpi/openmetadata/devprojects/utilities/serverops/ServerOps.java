@@ -2,14 +2,19 @@
 /* Copyright Contributors to the ODPi Egeria project. */
 package org.odpi.openmetadata.devprojects.utilities.serverops;
 
+import org.odpi.openmetadata.adminservices.client.ConfigurationManagementClient;
 import org.odpi.openmetadata.adminservices.client.OMAGServerOperationsClient;
+import org.odpi.openmetadata.adminservices.configuration.properties.OMAGServerConfig;
 import org.odpi.openmetadata.http.HttpHelper;
+import org.odpi.openmetadata.platformservices.client.PlatformServicesClient;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * ServerOps provides a utility for starting and stopping servers on an OMAG Server Platform.
@@ -32,6 +37,40 @@ public class ServerOps
         this.platformURLRoot = platformURLRoot;
         this.clientUserId    = clientUserId;
     }
+
+
+
+    /**
+     * Retrieve the version of the platform.  This fails if the platform is not running or the endpoint is populated by a service that is not an
+     * OMAG Server Platform.
+     *
+     * @return platform version or null
+     */
+    private String getPlatformOrigin()
+    {
+        try
+        {
+            /*
+             * This client is from the platform services module and queries the runtime state of the platform and the servers that are running on it.
+             */
+            PlatformServicesClient platformServicesClient = new PlatformServicesClient("MyPlatform", platformURLRoot);
+
+            /*
+             * This is the first call to the platform and determines the version of the software.
+             * If the platform is not running, or the remote service is not an OMAG Server Platform,
+             * the utility fails at this point.
+             */
+            return platformServicesClient.getPlatformOrigin(clientUserId);
+        }
+        catch (Exception error)
+        {
+            System.out.println("\n\nThere was an " + error.getClass().getName() + " exception when calling the platform.  Error message is: " + error.getMessage());
+            System.out.println("Ensure the platform URl is correct and the platform is running");
+        }
+
+        return null;
+    }
+
 
 
     /**
@@ -183,21 +222,53 @@ public class ServerOps
         System.out.println("===============================");
         System.out.println("OMAG Server Operations Utility:    " + new Date().toString());
         System.out.println("===============================");
-        System.out.println("Running against platform: " + platformURLRoot);
-        System.out.println("Using userId: " + clientUserId);
-        System.out.println();
+        System.out.print("Running against platform: " + platformURLRoot);
 
         ServerOps utility = new ServerOps(platformURLRoot, clientUserId);
 
         HttpHelper.noStrictSSLIfConfigured();
 
+        String platformOrigin = utility.getPlatformOrigin();
+
+        if (platformOrigin != null)
+        {
+            System.out.print(" - " + platformOrigin);
+        }
+        else
+        {
+            System.out.println();
+            System.exit(-1);
+        }
+
+        System.out.println("Using userId: " + clientUserId);
+        System.out.println();
+
+
         try
         {
+            ConfigurationManagementClient configurationManagementClient = new ConfigurationManagementClient(clientUserId, platformURLRoot);
+
+            Set<OMAGServerConfig> configuredServers = configurationManagementClient.getAllServerConfigurations();
+            List<String>          configuredServerNames = new ArrayList<>();
+
+            if (configuredServers != null)
+            {
+                for (OMAGServerConfig serverConfig : configuredServers)
+                {
+                    if (serverConfig != null)
+                    {
+                        configuredServerNames.add(serverConfig.getLocalServerName());
+                    }
+                }
+            }
+
             if (interactiveMode.equals(mode))
             {
                 while (! endInteractiveMode.equals(mode))
                 {
+
                     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                    System.out.println("Available servers: " + configuredServerNames);
                     System.out.println("Enter a command {start, stop, exit} along with one or more space separate server names. Press enter to execute request.");
 
                     String   command = br.readLine();

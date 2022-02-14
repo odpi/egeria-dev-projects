@@ -2,20 +2,23 @@
 <!-- Copyright Contributors to the Egeria project. -->
 
 
-# The Egeria Config Utility (egeria-config-utility)
+# The Asset Look Up utility (asset-look-up)
 
-The Egeria config utility creates configuration documents for OMAG servers.  It has two modes
+The asset look up utility queries assets in a metadata server.  It has two modes
 of operation:
 
 * *Interactive* - the utility loops waiting for more commands.  It is designed to run
   IntelliJ (or similar IDE) where it is available for new commands as you work with Egeria.
   
-* *Command* - the utility takes parameters to describe the server and it is configured in a
-  single request.
+* *Command* - the utility takes the guid of the asset to display.
 
 This utility works from a set of hard-coded defaults that you can change for your environment.  
-There is also plenty of scope to add new options to configure different types of servers and
-features.
+There is also plenty of scope to add new options to search for different types of elements.
+
+## Related utilities
+
+You can use the Asset Set Up utility to create some interesting metadata for
+the asset look up utility to display.
 
 ----
 License: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/),

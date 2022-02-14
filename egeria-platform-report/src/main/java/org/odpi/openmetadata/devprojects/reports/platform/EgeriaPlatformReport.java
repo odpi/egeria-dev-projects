@@ -84,7 +84,7 @@ public class EgeriaPlatformReport
             /*
              * This client is from the platform services module and queries the runtime state of the platform and the servers that are running on it.
              */
-            PlatformServicesClient platformServicesClient = new PlatformServicesClient(serverOfInterest, platformURLRoot);
+            PlatformServicesClient platformServicesClient = new PlatformServicesClient("EgeriaPlatform", platformURLRoot);
 
             /*
              * This outputs the report title
@@ -342,6 +342,7 @@ public class EgeriaPlatformReport
         catch (Exception error)
         {
             System.out.println("There was an " + error.getClass().getName() + " exception when calling the platform.  Error message is: " + error.getMessage());
+            System.exit(-1);
         }
     }
 
@@ -775,34 +776,36 @@ public class EgeriaPlatformReport
                 }
             }
 
+            report.printReportSubheading(detailIndentLevel,"Runtime Status");
+
             if (serverStartTime != null)
             {
-                report.printReportLine(detailIndentLevel,"Last Start Time", serverStartTime.toString());
+                report.printReportLine(detailIndentLevel + 1,"Last Start Time", serverStartTime.toString());
             }
 
             if (serverEndTime != null)
             {
-                report.printReportLine(detailIndentLevel,"Last End Time", serverEndTime.toString());
+                report.printReportLine(detailIndentLevel + 1,"Last End Time", serverEndTime.toString());
             }
 
             if ((serverActiveStatus != null) && (serverActiveStatus != ServerActiveStatus.UNKNOWN))
             {
-                report.printReportLine(detailIndentLevel,"Server Active Status", serverActiveStatus.getName());
+                report.printReportLine(detailIndentLevel + 1,"Server Active Status", serverActiveStatus.getName());
             }
 
             if (serverHistory != null)
             {
-                report.printReportSubheading(detailIndentLevel,"History");
+                report.printReportSubheading(detailIndentLevel + 1,"History");
 
                 for (OMAGServerInstanceHistory instanceHistory : serverHistory)
                 {
                     if (instanceHistory.getStartTime() != null)
                     {
-                        report.printReportLine(detailIndentLevel + 1,"Start Time", instanceHistory.getStartTime().toString());
+                        report.printReportLine(detailIndentLevel + 2,"Start Time", instanceHistory.getStartTime().toString());
                     }
                     if (instanceHistory.getEndTime() != null)
                     {
-                        report.printReportLine(detailIndentLevel + 1,"End Time", instanceHistory.getEndTime().toString());
+                        report.printReportLine(detailIndentLevel + 2,"End Time", instanceHistory.getEndTime().toString());
                     }
                 }
             }
@@ -1204,8 +1207,7 @@ public class EgeriaPlatformReport
 
     /**
      * Main program that controls the operation of the platform report.  The parameters are passed space separated.
-     * The platforms URL root must be passed as parameter 1.  The other parameters are used to override the
-     * report's default values.
+     * They are used to override the report's default values.
      *
      * @param args 1. service platform URL root, 2. client userId, 3. server name,
      */

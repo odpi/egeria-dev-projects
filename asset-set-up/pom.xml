@@ -52,6 +52,16 @@
 
         <dependency>
             <groupId>org.odpi.egeria</groupId>
+            <artifactId>community-profile-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.odpi.egeria</groupId>
+            <artifactId>community-profile-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.odpi.egeria</groupId>
             <artifactId>data-manager-client</artifactId>
         </dependency>
 
@@ -73,11 +83,6 @@
         <dependency>
             <groupId>org.odpi.egeria</groupId>
             <artifactId>it-infrastructure-client</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.odpi.egeria</groupId>
-            <artifactId>subject-area-client</artifactId>
         </dependency>
 
         <dependency>
