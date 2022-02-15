@@ -48,7 +48,7 @@ public class AssetSetUp
     private static final String fileName10 = "sample-data/old-market-drop-foot-weekly-measurements/week5.csv";
 
     private String serverName;
-    private String serverURLRoot;
+    private String platformURLRoot;
     private String clientUserId;
 
     private AssetConsumer                  assetConsumerClient            = null;
@@ -74,29 +74,29 @@ public class AssetSetUp
      * Set up the parameters for the utility.
      *
      * @param serverName server to call
-     * @param serverURLRoot location of server
+     * @param platformURLRoot location of server
      * @param clientUserId userId to access the server
      */
     private AssetSetUp(String serverName,
-                       String serverURLRoot,
+                       String platformURLRoot,
                        String clientUserId)
     {
         this.serverName = serverName;
-        this.serverURLRoot = serverURLRoot;
+        this.platformURLRoot = platformURLRoot;
         this.clientUserId = clientUserId;
 
         try
         {
-            csvOnboardingClient = new CSVFileAssetOwner(serverName, serverURLRoot);
-            assetConsumerClient = new AssetConsumer(serverName, serverURLRoot);
-            organizationManagement = new OrganizationManagement(serverName, serverURLRoot);
-            externalAssetManagerClient = new ExternalAssetManagerClient(serverName, serverURLRoot);
-            databaseManagerClient = new DatabaseManagerClient(serverName, serverURLRoot);
-            externalReferenceManagerClient = new ExternalReferenceManagerClient(serverName, serverURLRoot);
-            connectionManager = new ConnectionManager(serverName, serverURLRoot);
-            locationManager = new LocationManager(serverName, serverURLRoot);
-            capabilityManagerClient = new CapabilityManagerClient(serverName, serverURLRoot);
-            governanceZoneManager = new GovernanceZoneManager(serverName, serverURLRoot);
+            csvOnboardingClient = new CSVFileAssetOwner(serverName, platformURLRoot);
+            assetConsumerClient = new AssetConsumer(serverName, platformURLRoot);
+            organizationManagement = new OrganizationManagement(serverName, platformURLRoot);
+            externalAssetManagerClient = new ExternalAssetManagerClient(serverName, platformURLRoot);
+            databaseManagerClient = new DatabaseManagerClient(serverName, platformURLRoot);
+            externalReferenceManagerClient = new ExternalReferenceManagerClient(serverName, platformURLRoot);
+            connectionManager = new ConnectionManager(serverName, platformURLRoot);
+            locationManager = new LocationManager(serverName, platformURLRoot);
+            capabilityManagerClient = new CapabilityManagerClient(serverName, platformURLRoot);
+            governanceZoneManager = new GovernanceZoneManager(serverName, platformURLRoot);
         }
         catch (Exception error)
         {
