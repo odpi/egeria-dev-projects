@@ -539,6 +539,50 @@ public class ServerConfig
 
 
     /**
+     * Add an open metadata archive to the startup list of the name server.
+     *
+     * @param serverName name of server to update
+     * @param archiveFileName name of cohort to join
+     */
+    private void addStartupArchive(String serverName,
+                                   String archiveFileName)
+    {
+        try
+        {
+            MetadataAccessStoreConfigurationClient client = new MetadataAccessStoreConfigurationClient(clientUserId, serverName, platformURLRoot);
+
+            client.addStartUpOpenMetadataArchiveFile(archiveFileName);
+        }
+        catch (Exception error)
+        {
+            System.out.println("There was an " + error.getClass().getName() + " exception when calling the platform.  Error message is: " + error.getMessage());
+        }
+    }
+
+
+    /**
+     * Update a server's userId.
+     *
+     * @param serverName name of server to update
+     * @param userId new userId
+     */
+    private void updateServerUserId(String serverName,
+                                    String userId)
+    {
+        try
+        {
+            OMAGServerConfigurationClient client = new OMAGServerConfigurationClient(clientUserId, serverName, platformURLRoot);
+
+            client.setServerUserId(userId);
+        }
+        catch (Exception error)
+        {
+            System.out.println("There was an " + error.getClass().getName() + " exception when calling the platform.  Error message is: " + error.getMessage());
+        }
+    }
+
+
+    /**
      * Delete a server.
      *
      * @param serverName name of server
@@ -638,6 +682,28 @@ public class ServerConfig
                 System.out.println("  Error: include a server name");
             }
         }
+        else if ("add-startup-archive".equals(mode))
+        {
+            if (options.length > 1)
+            {
+                this.addStartupArchive(options[0], options[1]);
+            }
+            else
+            {
+                System.out.println("  Error: include a server name and an archive file name");
+            }
+        }
+        else if ("update-server-user-id".equals(mode))
+        {
+            if (options.length > 1)
+            {
+                this.updateServerUserId(options[0], options[1]);
+            }
+            else
+            {
+                System.out.println("  Error: include a server name and new user id");
+            }
+        }
         else if ("delete-server".equals(mode))
         {
             if (options.length > 0)
@@ -724,6 +790,8 @@ public class ServerConfig
                     System.out.println("  - add-topic-connector       <serverName> <optionalConnectorProviderClassName> ");
                     System.out.println("  - log-event-contents        <serverName> <optionalConnectorProviderClassName> ");
                     System.out.println("  - add-cohort-member         <serverName> <optionalCohortName> ");
+                    System.out.println("  - add-startup-archive       <serverName> <archiveFileName> ");
+                    System.out.println("  - update-server-user-id     <serverName> <newUserId> ");
                     System.out.println("  - delete-server             <serverName>  ");
                     System.out.println("  - exit  \n");
 
