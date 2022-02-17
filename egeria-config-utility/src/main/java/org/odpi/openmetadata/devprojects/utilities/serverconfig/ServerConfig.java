@@ -13,6 +13,7 @@ import org.odpi.openmetadata.adminservices.ffdc.exception.OMAGInvalidParameterEx
 import org.odpi.openmetadata.adminservices.ffdc.exception.OMAGNotAuthorizedException;
 import org.odpi.openmetadata.frameworks.connectors.properties.beans.Connection;
 import org.odpi.openmetadata.frameworks.connectors.properties.beans.ConnectorType;
+import org.odpi.openmetadata.frameworks.connectors.properties.beans.Endpoint;
 import org.odpi.openmetadata.http.HttpHelper;
 import org.odpi.openmetadata.platformservices.client.PlatformServicesClient;
 import org.odpi.openmetadata.repositoryservices.auditlog.OMRSAuditLogRecordSeverity;
@@ -39,6 +40,7 @@ public class ServerConfig
     private static String eventsDisplayConnectorProviderClassName      = "org.odpi.openmetadata.devprojects.connectors.auditlog.eventdisplay.EventDisplayAuditLogStoreProvider";
     private static String eventBusURLRoot = "localhost:9092"; // set to null to turn off all eventing to Kafka topics
     private static String organizationName = "Coco Pharmaceuticals";
+    private static String systemUserId = "cocoMDS1";
     private static int    maxPageSize = 600;
 
     private String platformURLRoot;
@@ -169,7 +171,7 @@ public class ServerConfig
             MetadataAccessStoreConfigurationClient client = new MetadataAccessStoreConfigurationClient(clientUserId, serverName, platformURLRoot);
 
             client.setServerDescription("Metadata Access Store called " + serverName + " running on platform " + platformURLRoot);
-            client.setServerUserId("cocoMDS1npa");
+            client.setServerUserId(systemUserId);
             client.setServerType(null); // Let the admin service set up the server types
             client.setOrganizationName(organizationName);
             client.setMaxPageSize(maxPageSize);
@@ -438,7 +440,7 @@ public class ServerConfig
             IntegrationDaemonConfigurationClient client = new IntegrationDaemonConfigurationClient(clientUserId, serverName, platformURLRoot);
 
             client.setServerDescription("Integration daemon called " + serverName + " running on platform " + platformURLRoot);
-            client.setServerUserId(serverName + "npa");
+            client.setServerUserId(systemUserId);
             client.setServerType(null); // Let the admin service set up the server types
             client.setOrganizationName(organizationName);
             client.setMaxPageSize(maxPageSize);
@@ -469,8 +471,9 @@ public class ServerConfig
     private void addTopicConnector(String serverName,
                                    String connectorProviderClassName)
     {
-        Connection    connection = new Connection();
+        Connection    connection    = new Connection();
         ConnectorType connectorType = new ConnectorType();
+        Endpoint      endpoint      = new Endpoint();
 
         if (connectorProviderClassName == null)
         {
@@ -482,11 +485,14 @@ public class ServerConfig
         }
         connection.setConnectorType(connectorType);
 
+        endpoint.setAddress(eventBusURLRoot);
+        connection.setEndpoint(endpoint);
+
         IntegrationConnectorConfig integrationConnectorConfig = new IntegrationConnectorConfig();
 
         integrationConnectorConfig.setConnectorId(UUID.randomUUID().toString());
         integrationConnectorConfig.setConnectorName("Topic Connector for " + connectorProviderClassName);
-        integrationConnectorConfig.setConnectorUserId(serverName + "npa");
+        integrationConnectorConfig.setConnectorUserId(systemUserId);
         integrationConnectorConfig.setConnection(connection);
 
         try
