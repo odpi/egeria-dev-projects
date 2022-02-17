@@ -753,9 +753,9 @@ public class ServerConfig
             mode = args[2];
         }
 
-        System.out.println("===============================");
-        System.out.println("OMAG Server Operations Utility:    " + new Date().toString());
-        System.out.println("===============================");
+        System.out.println("==================================");
+        System.out.println("OMAG Server Configuration Utility:    " + new Date().toString());
+        System.out.println("==================================");
         System.out.print("Running against platform: " + platformURLRoot);
 
         ServerConfig utility = new ServerConfig(platformURLRoot, clientUserId);

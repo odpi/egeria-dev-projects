@@ -4,8 +4,8 @@
 package org.odpi.openmetadata.devprojects.connectors.integration.kafka;
 
 import org.odpi.openmetadata.frameworks.auditlog.AuditLogReportingComponent;
-import org.odpi.openmetadata.frameworks.connectors.ConnectorProviderBase;
 import org.odpi.openmetadata.frameworks.connectors.properties.beans.ConnectorType;
+import org.odpi.openmetadata.governanceservers.integrationdaemonservices.connectors.IntegrationConnectorProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * KafkaTopicsCaptureIntegrationProvider is the connector provider for the kafka integration connector that extracts topic names from the broker.
  */
-public class KafkaTopicsCaptureIntegrationProvider extends ConnectorProviderBase
+public class KafkaTopicsCaptureIntegrationProvider extends IntegrationConnectorProvider
 {
     /*
      * Unique identifier of the connector for the audit log.
@@ -82,6 +82,5 @@ public class KafkaTopicsCaptureIntegrationProvider extends ConnectorProviderBase
         componentDescription.setComponentWikiURL(connectorWikiPage);
 
         super.setConnectorComponentDescription(componentDescription);
-
     }
 }
