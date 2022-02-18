@@ -40,7 +40,7 @@ public class ServerConfig
     private static String eventsDisplayConnectorProviderClassName      = "org.odpi.openmetadata.devprojects.connectors.auditlog.eventdisplay.EventDisplayAuditLogStoreProvider";
     private static String eventBusURLRoot = "localhost:9092"; // set to null to turn off all eventing to Kafka topics
     private static String organizationName = "Coco Pharmaceuticals";
-    private static String systemUserId = "cocoMDS1";
+    private static String systemUserId = "cocoMDS1npa";
     private static int    maxPageSize = 600;
 
     private String platformURLRoot;
