@@ -61,9 +61,16 @@
         </dependency>
 
         <dependency>
+            <groupId>org.odpi.egeria</groupId>
+            <artifactId>integration-daemon-services-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
         </dependency>
+
 
         <!-- Test framework -->
 

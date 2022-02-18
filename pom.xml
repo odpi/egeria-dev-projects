@@ -285,6 +285,14 @@
                 <version>${open-metadata.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.odpi.egeria</groupId>
+                <artifactId>integration-daemon-services-api</artifactId>
+                <version>3.6-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+
+
             <!-- APIs for configuring the OMAG Server Platform and its servers,
                  controlling them once deployed and querying their status -->
 
