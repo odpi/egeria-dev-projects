@@ -192,7 +192,7 @@ public class ServerConfig
 
             List<String> personalFilesZone = new ArrayList<>();
 
-            assetLookupZones.add("personal-files");
+            personalFilesZone.add("personal-files");
 
             List<String> maintenanceZones = new ArrayList<>();
 
