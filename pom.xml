@@ -21,7 +21,7 @@
 
     <groupId>org.odpi.egeria</groupId>
     <artifactId>egeria-dev-projects</artifactId>
-    <version>3.6-SNAPSHOT</version>
+    <version>3.7-SNAPSHOT</version>
 
     <url>https://egeria-project.org/</url>
 
@@ -97,6 +97,12 @@
                 <enabled>true</enabled>
             </releases>
         </repository>
+        <repository>
+            <id>snapshots-repo</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases><enabled>false</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>
         <!-- Needed for fixes to old jackson libraries used as transitive dependencies -->
         <repository>
             <id>2-Fixes</id>
@@ -138,7 +144,7 @@
 
 
     <properties>
-        <open-metadata.version>3.6-SNAPSHOT</open-metadata.version>
+        <open-metadata.version>3.7-SNAPSHOT</open-metadata.version>
 
         <!-- Level of Java  -->
         <maven.compiler.source>11</maven.compiler.source>
@@ -288,7 +294,7 @@
             <dependency>
                 <groupId>org.odpi.egeria</groupId>
                 <artifactId>integration-daemon-services-api</artifactId>
-                <version>3.6-SNAPSHOT</version>
+                <version>${open-metadata.version}</version>
                 <scope>compile</scope>
             </dependency>
 
