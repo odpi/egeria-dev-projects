@@ -20,6 +20,7 @@ import org.odpi.openmetadata.adminservices.configuration.registration.Governance
 import org.odpi.openmetadata.adminservices.ffdc.exception.OMAGConfigurationErrorException;
 import org.odpi.openmetadata.adminservices.properties.OMAGServerServiceStatus;
 import org.odpi.openmetadata.adminservices.properties.ServerActiveStatus;
+import org.odpi.openmetadata.adminservices.properties.ServerServicesStatus;
 import org.odpi.openmetadata.devprojects.reports.EgeriaReport;
 import org.odpi.openmetadata.frameworks.connectors.ffdc.InvalidParameterException;
 import org.odpi.openmetadata.frameworks.connectors.properties.beans.Connection;
@@ -211,7 +212,7 @@ public class EgeriaPlatformReport
                                                                                                                serverName,
                                                                                                                platformURLRoot);
 
-                            org.odpi.openmetadata.adminservices.properties.ServerStatus adminServerStatus = serverOperationsClient.getServerStatus();
+                            ServerServicesStatus adminServerStatus = serverOperationsClient.getServerStatus();
 
                             if (adminServerStatus != null)
                             {
@@ -267,7 +268,7 @@ public class EgeriaPlatformReport
                                                                                                        serverOfInterest,
                                                                                                        platformURLRoot);
 
-                    org.odpi.openmetadata.adminservices.properties.ServerStatus adminServerStatus = serverOperationsClient.getServerStatus();
+                    ServerServicesStatus adminServerStatus = serverOperationsClient.getServerStatus();
 
                     if (adminServerStatus != null)
                     {

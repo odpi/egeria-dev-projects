@@ -195,13 +195,14 @@ public class AssetSetUp
             csvOnboardingClient.addAssetOrigin(clientUserId, assetGUID, orgMap.get(organizationName), null, otherOriginValues);
 
             // todo
-            csvOnboardingClient.addSecurityTags(null, null, null, null, null);
-            csvOnboardingClient.addSemanticAssignment(null, null, null, null);
+            //csvOnboardingClient.addSecurityTags(clientUserId, assetGUID, null, null, null);
+            //csvOnboardingClient.addSemanticAssignment(clientUserId, assetGUID, null, null);
+            csvOnboardingClient.publishAsset(clientUserId, assetGUID);
 
         }
         catch (Exception error)
         {
-            System.out.println("There was a " + error.getClass().getName() + " exception when creating the scv file: " + fileName + ".  Error message is: " + error.getMessage());
+            System.out.println("There was a " + error.getClass().getName() + " exception when creating the csv file: " + fileName + ".  Error message is: " + error.getMessage());
             System.exit(-1);
         }
     }

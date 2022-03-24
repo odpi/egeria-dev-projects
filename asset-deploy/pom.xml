@@ -21,23 +21,38 @@
         <url>http://github.com/odpi/egeria-dev-projects</url>
     </scm>
 
-    <name>Egeria Report Utilities</name>
+    <name>Asset Deploy</name>
     <description>
-        Provide methods to display text to the screen and creates a markdown equivalent report file.
+        Creates sample infrastructure asset catalog entries.
     </description>
 
-    <artifactId>egeria-report-utilities</artifactId>
+    <artifactId>asset-deploy</artifactId>
 
     <dependencies>
 
         <dependency>
             <groupId>org.odpi.egeria</groupId>
-            <artifactId>open-connector-framework</artifactId>
+            <artifactId>it-infrastructure-api</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.odpi.egeria</groupId>
-            <artifactId>ffdc-services</artifactId>
+            <artifactId>it-infrastructure-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.odpi.egeria</groupId>
+            <artifactId>admin-services-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.odpi.egeria</groupId>
+            <artifactId>platform-services-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.odpi.egeria</groupId>
+            <artifactId>http-helper</artifactId>
         </dependency>
 
         <dependency>

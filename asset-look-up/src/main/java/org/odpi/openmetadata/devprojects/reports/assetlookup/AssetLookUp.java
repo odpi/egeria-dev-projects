@@ -2,13 +2,8 @@
 /* Copyright Contributors to the ODPi Egeria project. */
 package org.odpi.openmetadata.devprojects.reports.assetlookup;
 
-import org.odpi.openmetadata.accessservices.assetconsumer.api.AssetConsumerEventListener;
 import org.odpi.openmetadata.accessservices.assetconsumer.client.AssetConsumer;
 import org.odpi.openmetadata.accessservices.assetconsumer.elements.MeaningElement;
-import org.odpi.openmetadata.accessservices.assetconsumer.events.AssetConsumerEvent;
-import org.odpi.openmetadata.accessservices.assetconsumer.events.AssetConsumerEventType;
-import org.odpi.openmetadata.accessservices.assetconsumer.events.NewAssetEvent;
-import org.odpi.openmetadata.accessservices.assetconsumer.events.UpdatedAssetEvent;
 import org.odpi.openmetadata.frameworks.connectors.properties.*;
 import org.odpi.openmetadata.http.HttpHelper;
 import org.odpi.openmetadata.platformservices.client.PlatformServicesClient;
@@ -24,7 +19,7 @@ import java.util.Map;
 /**
  * AssetLookUp illustrates the use of the Asset Consumer OMAS API to search for and display the metadata linked to an Asset.
  */
-public class AssetLookUp extends AssetConsumerEventListener
+public class AssetLookUp
 {
     private String serverName;
     private String platformURLRoot;
@@ -54,29 +49,6 @@ public class AssetLookUp extends AssetConsumerEventListener
         catch (Exception error)
         {
             System.out.println("There was an exception when creating the Asset Consumer OMAS client.  Error message is: " + error.getMessage());
-        }
-    }
-
-
-
-    /**
-     * Process an event that was published by the Asset Consumer OMAS.
-     *
-     * @param event event object - call getEventType to find out what type of event.
-     */
-    public void processEvent(AssetConsumerEvent event)
-    {
-        if (event.getEventType() == AssetConsumerEventType.NEW_ASSET_EVENT)
-        {
-            NewAssetEvent assetEvent = (NewAssetEvent)event;
-
-            System.out.println("EVENT: " + assetEvent.getEventType().getEventTypeName() + " - for asset " + assetEvent.getAsset().getGUID());
-        }
-        else if (event.getEventType() == AssetConsumerEventType.UPDATED_ASSET_EVENT)
-        {
-            UpdatedAssetEvent assetEvent = (UpdatedAssetEvent)event;
-
-            System.out.println("EVENT: " + assetEvent.getEventType().getEventTypeName() + " - for asset " + assetEvent.getAsset().getGUID() + " - at " + assetEvent.getUpdateTime());
         }
     }
 
@@ -285,7 +257,7 @@ public class AssetLookUp extends AssetConsumerEventListener
                         command = commandWords[0];
                     }
 
-                    if (commandWords.length > 2)
+                    if (commandWords.length > 1)
                     {
                         if ("get-asset".equals(command))
                         {

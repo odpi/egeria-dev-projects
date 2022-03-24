@@ -10,7 +10,7 @@
     <parent>
         <artifactId>egeria-dev-projects</artifactId>
         <groupId>org.odpi.egeria</groupId>
-        <version>3.6-SNAPSHOT</version>
+        <version>3.7-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -23,7 +23,7 @@
 
     <name>Asset Set up</name>
     <description>
-        Creates sample asset catalog entry using different client APIs.
+        Creates sample data asset catalog entry using different client APIs.
     </description>
 
     <artifactId>asset-set-up</artifactId>

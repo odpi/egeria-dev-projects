@@ -21,7 +21,7 @@
 
     <groupId>org.odpi.egeria</groupId>
     <artifactId>egeria-dev-projects</artifactId>
-    <version>3.6-SNAPSHOT</version>
+    <version>3.7-SNAPSHOT</version>
 
     <url>https://egeria-project.org/</url>
 
@@ -131,14 +131,15 @@
         <module>egeria-ops-utility</module>
         <module>egeria-platform-report</module>
         <module>event-display-audit-log-connector</module>
-        <module>kafka-topics-capture-connector</module>
+        <module>egeria-infrastructure-catalog-connector</module>
+        <module>asset-deploy</module>
         <module>asset-look-up</module>
         <module>asset-set-up</module>
     </modules>
 
 
     <properties>
-        <open-metadata.version>3.6-SNAPSHOT</open-metadata.version>
+        <open-metadata.version>3.7-SNAPSHOT</open-metadata.version>
 
         <!-- Level of Java  -->
         <maven.compiler.source>11</maven.compiler.source>
@@ -287,9 +288,16 @@
 
             <dependency>
                 <groupId>org.odpi.egeria</groupId>
-                <artifactId>integration-daemon-services-api</artifactId>
-                <version>3.6-SNAPSHOT</version>
+                <artifactId>infrastructure-integrator-api</artifactId>
                 <scope>compile</scope>
+                <version>${open-metadata.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.odpi.egeria</groupId>
+                <artifactId>integration-daemon-services-api</artifactId>
+                <scope>compile</scope>
+                <version>${open-metadata.version}</version>
             </dependency>
 
 
@@ -299,6 +307,20 @@
             <dependency>
                 <groupId>org.odpi.egeria</groupId>
                 <artifactId>admin-services-api</artifactId>
+                <scope>compile</scope>
+                <version>${open-metadata.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.odpi.egeria</groupId>
+                <artifactId>integration-daemon-services-api</artifactId>
+                <scope>compile</scope>
+                <version>${open-metadata.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.odpi.egeria</groupId>
+                <artifactId>integration-daemon-services-client</artifactId>
                 <scope>compile</scope>
                 <version>${open-metadata.version}</version>
             </dependency>
