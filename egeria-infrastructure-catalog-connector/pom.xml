@@ -21,78 +21,97 @@
         <url>http://github.com/odpi/egeria-dev-projects</url>
     </scm>
 
-    <name>Asset Set up</name>
+    <name>Egeria Infrastructure Cataloguing Connector</name>
     <description>
-        Creates sample data asset catalog entry using different client APIs.
+        Scavenges information from an Egeria deployment to catalog the platforms, servers, services and connectors.
     </description>
 
-    <artifactId>asset-set-up</artifactId>
+    <artifactId>egeria-infrastructure-catalog-connector</artifactId>
 
     <dependencies>
 
         <dependency>
             <groupId>org.odpi.egeria</groupId>
+            <artifactId>audit-log-framework</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.odpi.egeria</groupId>
             <artifactId>open-connector-framework</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.odpi.egeria</groupId>
-            <artifactId>asset-consumer-client</artifactId>
+            <artifactId>infrastructure-integrator-api</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.odpi.egeria</groupId>
-            <artifactId>asset-owner-client</artifactId>
+            <artifactId>it-infrastructure-api</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.odpi.egeria</groupId>
-            <artifactId>asset-manager-client</artifactId>
+            <artifactId>repository-services-apis</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.odpi.egeria</groupId>
-            <artifactId>community-profile-api</artifactId>
+            <artifactId>integration-daemon-services-api</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.odpi.egeria</groupId>
-            <artifactId>community-profile-client</artifactId>
+            <artifactId>admin-services-api</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.odpi.egeria</groupId>
-            <artifactId>data-manager-client</artifactId>
+            <artifactId>admin-services-client</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.odpi.egeria</groupId>
-            <artifactId>digital-architecture-client</artifactId>
+            <artifactId>platform-services-client</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.odpi.egeria</groupId>
-            <artifactId>governance-program-api</artifactId>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
         </dependency>
+
+
+        <!-- Test framework -->
 
         <dependency>
             <groupId>org.odpi.egeria</groupId>
-            <artifactId>governance-program-client</artifactId>
+            <artifactId>open-metadata-ut</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.odpi.egeria</groupId>
-            <artifactId>it-infrastructure-client</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.odpi.egeria</groupId>
-            <artifactId>http-helper</artifactId>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
         </dependency>
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

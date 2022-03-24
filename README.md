@@ -27,8 +27,8 @@ may extend it for your own uses.
   that displays the contents of event added ans additionalInformation in EVENT audit log record.
   Change the format or add additional information.
   
-* **kafka-topics-capture-connector** - an implementation of an Integration Connector that catalogs the
-  topics that are known to an Apache Kafka server.
+* **kafka-topics-audit-connector** - an implementation of an Integration Connector that validates that all
+  topics that are known to an Apache Kafka server are also catalogued in open metadata.
 
 * **asset-look-up** - a report about the metadata associated with an Asset entity.  Use **asset-set-up**
   to populate your metadata repository and then explore ...

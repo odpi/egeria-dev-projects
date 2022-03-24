@@ -5,6 +5,11 @@ package org.odpi.openmetadata.devprojects.utilities.serverops;
 import org.odpi.openmetadata.adminservices.client.ConfigurationManagementClient;
 import org.odpi.openmetadata.adminservices.client.OMAGServerOperationsClient;
 import org.odpi.openmetadata.adminservices.configuration.properties.OMAGServerConfig;
+import org.odpi.openmetadata.adminservices.configuration.registration.ServerTypeClassification;
+import org.odpi.openmetadata.adminservices.properties.ServerServicesStatus;
+import org.odpi.openmetadata.governanceservers.integrationdaemonservices.client.IntegrationDaemon;
+import org.odpi.openmetadata.governanceservers.integrationdaemonservices.properties.IntegrationConnectorReport;
+import org.odpi.openmetadata.governanceservers.integrationdaemonservices.properties.IntegrationServiceSummary;
 import org.odpi.openmetadata.http.HttpHelper;
 import org.odpi.openmetadata.platformservices.client.PlatformServicesClient;
 
@@ -162,6 +167,119 @@ public class ServerOps
 
 
     /**
+     * Query the status of an integration daemon.
+     *
+     * @param serverName name of the server
+     */
+    private void queryIntegrationDaemon(String serverName)
+    {
+        try
+        {
+            IntegrationDaemon client = new IntegrationDaemon(clientUserId, platformURLRoot);
+
+            List<IntegrationServiceSummary> serviceSummaries = client.getIntegrationDaemonStatus(clientUserId);
+
+            if (serviceSummaries != null)
+            {
+                System.out.println("  integration services: ");
+
+                for (IntegrationServiceSummary serviceSummary : serviceSummaries)
+                {
+                    System.out.println("    integration service: " + serviceSummary.getIntegrationServiceFullName());
+
+                    if (serviceSummary.getIntegrationConnectorReports() != null)
+                    {
+                        System.out.println("      connectors: " + serviceSummary.getIntegrationServiceFullName());
+
+                        for (IntegrationConnectorReport connectorReport : serviceSummary.getIntegrationConnectorReports())
+                        {
+                            System.out.println("        connector: " + connectorReport.getConnectorName() + "(" + connectorReport.getConnectorInstanceId() + ")");
+                            System.out.println("          status: " + connectorReport.getConnectorStatus());
+                            System.out.println("          lastRefreshTime: " + connectorReport.getLastRefreshTime());
+                            System.out.println("          lastStatusChange: " + connectorReport.getLastStatusChange());
+
+                            if (connectorReport.getStatistics() != null)
+                            {
+                                System.out.println("          statistics: ");
+
+                                for (String statisticName : connectorReport.getStatistics().keySet())
+                                {
+                                    System.out.println("            " + statisticName + ": " + connectorReport.getStatistics().get(statisticName));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                System.out.println(serverName + "  not running.");
+            }
+        }
+        catch (Exception error)
+        {
+            System.out.println("There was an " + error.getClass().getName() + " exception when calling the platform.  Error message is: " + error.getMessage());
+        }
+    }
+
+    /**
+     * Query the status of a server.
+     *
+     * @param serverName name of the server
+     */
+    private void queryServer(String serverName)
+    {
+        try
+        {
+            OMAGServerOperationsClient client = new OMAGServerOperationsClient(clientUserId, serverName, platformURLRoot);
+
+            System.out.println("Status of " + serverName + " ...");
+
+            ServerServicesStatus serverStatus = client.getServerStatus();
+
+            if (serverStatus != null)
+            {
+                System.out.println("  serverType: " + serverStatus.getServerType());
+                System.out.println("  status: " + serverStatus.getServerActiveStatus());
+
+                if (ServerTypeClassification.INTEGRATION_DAEMON.getServerTypeName().equals(serverStatus.getServerType()))
+                {
+                    queryIntegrationDaemon(serverName);
+                }
+            }
+            else
+            {
+                System.out.println(serverName + "  not running.");
+            }
+        }
+        catch (Exception error)
+        {
+            System.out.println("There was an " + error.getClass().getName() + " exception when calling the platform.  Error message is: " + error.getMessage());
+        }
+    }
+
+
+    /**
+     * Query the list of named servers.
+     *
+     * @param serverNames list of names
+     */
+    private void queryServers(List<String> serverNames)
+    {
+        if (serverNames != null)
+        {
+            for (String serverName : serverNames)
+            {
+                if (serverName != null)
+                {
+                    this.queryServer(serverName);
+                }
+            }
+        }
+    }
+
+
+    /**
      * Run the requested command.
      *
      * @param mode command
@@ -185,12 +303,16 @@ public class ServerOps
         {
             this.stopServers(serverList);
         }
+        else if ("query".equals(mode))
+        {
+            this.queryServers(serverList);
+        }
     }
 
 
     /**
-     * Main program that controls the operation of the platform report.  The parameters are passed space separated.
-     * The  parameters are used to override the report's default values. If mode is set to "interactive"
+     * Main program that controls the operation of the utility.  The parameters are passed space separated.
+     * The parameters are used to override the utility's default values. If mode is set to "interactive"
      * the caller is prompted for a command and one to many server names.
      *
      * @param args 1. service platform URL root, 2. client userId, 3. mode 4. server name 5. server name ...
@@ -248,28 +370,27 @@ public class ServerOps
         {
             ConfigurationManagementClient configurationManagementClient = new ConfigurationManagementClient(clientUserId, platformURLRoot);
 
-            Set<OMAGServerConfig> configuredServers = configurationManagementClient.getAllServerConfigurations();
-            List<String>          configuredServerNames = new ArrayList<>();
-
-            if (configuredServers != null)
-            {
-                for (OMAGServerConfig serverConfig : configuredServers)
-                {
-                    if (serverConfig != null)
-                    {
-                        configuredServerNames.add(serverConfig.getLocalServerName());
-                    }
-                }
-            }
-
             if (interactiveMode.equals(mode))
             {
                 while (! endInteractiveMode.equals(mode))
                 {
+                    Set<OMAGServerConfig> configuredServers = configurationManagementClient.getAllServerConfigurations();
+                    List<String>          configuredServerNames = new ArrayList<>();
+
+                    if (configuredServers != null)
+                    {
+                        for (OMAGServerConfig serverConfig : configuredServers)
+                        {
+                            if (serverConfig != null)
+                            {
+                                configuredServerNames.add(serverConfig.getLocalServerName());
+                            }
+                        }
+                    }
 
                     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
                     System.out.println("Available servers: " + configuredServerNames);
-                    System.out.println("Enter a command {start, stop, exit} along with one or more space separate server names. Press enter to execute request.");
+                    System.out.println("Enter a command {start, query, stop, exit} along with one or more space separate server names. Press enter to execute request.");
 
                     String   command = br.readLine();
                     String[] commandWords = command.split(" ");

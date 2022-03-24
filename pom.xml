@@ -137,7 +137,8 @@
         <module>egeria-ops-utility</module>
         <module>egeria-platform-report</module>
         <module>event-display-audit-log-connector</module>
-        <module>kafka-topics-capture-connector</module>
+        <module>egeria-infrastructure-catalog-connector</module>
+        <module>asset-deploy</module>
         <module>asset-look-up</module>
         <module>asset-set-up</module>
     </modules>
@@ -293,9 +294,16 @@
 
             <dependency>
                 <groupId>org.odpi.egeria</groupId>
-                <artifactId>integration-daemon-services-api</artifactId>
-                <version>${open-metadata.version}</version>
+                <artifactId>infrastructure-integrator-api</artifactId>
                 <scope>compile</scope>
+                <version>${open-metadata.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.odpi.egeria</groupId>
+                <artifactId>integration-daemon-services-api</artifactId>
+                <scope>compile</scope>
+                <version>${open-metadata.version}</version>
             </dependency>
 
 
@@ -305,6 +313,20 @@
             <dependency>
                 <groupId>org.odpi.egeria</groupId>
                 <artifactId>admin-services-api</artifactId>
+                <scope>compile</scope>
+                <version>${open-metadata.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.odpi.egeria</groupId>
+                <artifactId>integration-daemon-services-api</artifactId>
+                <scope>compile</scope>
+                <version>${open-metadata.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.odpi.egeria</groupId>
+                <artifactId>integration-daemon-services-client</artifactId>
                 <scope>compile</scope>
                 <version>${open-metadata.version}</version>
             </dependency>
