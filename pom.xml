@@ -141,6 +141,7 @@
         <module>asset-deploy</module>
         <module>asset-look-up</module>
         <module>asset-set-up</module>
+        <module>database-report</module>
     </modules>
 
 
@@ -161,7 +162,9 @@
         <surefire.plugin.version>3.0.0-M5</surefire.plugin.version>
         <testng.version>7.5</testng.version>
         <logback.version>1.2.10</logback.version>
-        <kafka.version>3.0.0</kafka.version>
+        <kafka.version>3.1.0</kafka.version>
+        <jackson.version>2.13.2</jackson.version>
+        <jackson.databind.version>2.13.2.2</jackson.databind.version>
 
         <!-- Versions of plugins -->
         <enunciate-maven-plugin.version>2.10.1</enunciate-maven-plugin.version>
@@ -256,6 +259,14 @@
                 <version>${kafka.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <scope>compile</scope>
+                <version>${jackson.databind.version}</version>
+            </dependency>
+
+
             <!-- ================================ -->
             <!-- Egeria libraries used at runtime -->
 
@@ -313,13 +324,6 @@
             <dependency>
                 <groupId>org.odpi.egeria</groupId>
                 <artifactId>admin-services-api</artifactId>
-                <scope>compile</scope>
-                <version>${open-metadata.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.odpi.egeria</groupId>
-                <artifactId>integration-daemon-services-api</artifactId>
                 <scope>compile</scope>
                 <version>${open-metadata.version}</version>
             </dependency>

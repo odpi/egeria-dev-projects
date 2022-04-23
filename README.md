@@ -37,6 +37,8 @@ may extend it for your own uses.
   metadata centred around an Asset.  This is a metadata element describing a digital
   resource.
   
+* **database-report** - a utility to report on the databases catalogued in open metadata.  
+  
 ----
 License: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/),
 Copyright Contributors to the ODPi Egeria project.
