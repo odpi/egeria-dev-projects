@@ -90,7 +90,9 @@ public class EgeriaPlatformReport
             /*
              * This outputs the report title
              */
-            report.printReportTitle(indentLevel, platformURLRoot);
+            final String reportTitle = "Platform report for: ";
+
+            report.printReportTitle(indentLevel, reportTitle + platformURLRoot);
 
             int detailIndentLevel = indentLevel + 1;
 
