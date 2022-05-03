@@ -115,7 +115,7 @@ public class ComponentIdReport
         for (EngineServiceDescription serviceDescription : EngineServiceDescription.values())
         {
             ComponentDescription componentDescription = new AuditLogReportingComponent(serviceDescription.getEngineServiceCode(),
-                                                                                       serviceDescription.getEngineServiceName(),
+                                                      serviceDescription.getEngineServiceName(),
                                                                                        serviceDescription.getEngineServiceDescription(),
                                                                                        serviceDescription.getEngineServiceWiki());
 
