@@ -8,25 +8,28 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- Name and description of the project -->
+    <name>Egeria Developer Projects</name>
+    <description>
+        Top-level package for the dev projects to allow a single build of the java code.
+    </description>
+
+    <!-- These are our maven 'coordinates' ie the name of the artifact and its version -->
+    <groupId>org.odpi.egeria</groupId>
+    <artifactId>egeria-dev-projects</artifactId>
+    <version>3.6</version>
+
+    <!-- This defines the link to our sources, and is required if the artifact is published to maven central -->
     <scm>
         <connection>scm:git:git://github.com/odpi/egeria-dev-projects.git</connection>
         <developerConnection>scm:git:ssh://github.com/odpi/egeria-dev-projects.git</developerConnection>
         <url>http://github.com/odpi/egeria-dev-projects</url>
     </scm>
 
-    <name>Egeria Developer Projects</name>
-    <description>
-        Top-level package for the dev projects to allow a single build of the java code.
-    </description>
-
-    <groupId>org.odpi.egeria</groupId>
-    <artifactId>egeria-dev-projects</artifactId>
-    <version>3.6</version>
-
+    <!-- Link for further information -->
     <url>https://egeria-project.org/</url>
 
     <!-- The Apache license is used for code and the creative commons license is used for documentation -->
-
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -38,6 +41,7 @@
         </license>
     </licenses>
 
+    <!-- Additional metadata about the project - optional -->
     <organization>
         <name>LF AI &amp; Data Foundation</name>
         <url>https://lfaidata.foundation/</url>
@@ -83,9 +87,10 @@
         </developer>
     </developers>
 
-    <!-- POM packaging means that this module has sub-modules -->
+    <!-- POM packaging means that this artifact doesn't contain any deployable artifacts, it's just a container for others -->
     <packaging>pom</packaging>
 
+    <!-- Modules (by directory name) that we need to build. Each has it's own POM and points back here as parent -->
     <modules>
         <module>egeria-report-utilities</module>
         <module>component-id-report</module>
@@ -100,6 +105,7 @@
 
 
     <properties>
+        <!-- The version of EGERIA base libraries we are going to use -->
         <open-metadata.version>3.6</open-metadata.version>
 
         <!-- Level of Java  -->
@@ -109,9 +115,19 @@
         <!-- Platform encoding  -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <classmate.version>1.5.1</classmate.version>
+
+        <!-- Versions of plugins we use -->
+        <maven-compiler.version>3.10.1</maven-compiler.version>
+        <maven-dependency.version>3.3.0</maven-dependency.version>
+        <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
+        <rat-plugin.version>0.13</rat-plugin.version>
+        <surefire.plugin.version>3.0.0-M6</surefire.plugin.version>
+        <testng.version>7.5</testng.version>
+        <assembly.plugin.version>3.3.0</assembly.plugin.version>
+
     </properties>
 
+    <!-- This section defines constraints on the version of dependencies that we will use -->
     <dependencyManagement>
 
         <dependencies>
@@ -125,6 +141,7 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <!-- For egeria, we IMPORT the main Egeria pom here, so we will inherit all of Egeria's constraints by default -->
             <dependency>
                 <groupId>org.odpi.egeria</groupId>
                 <artifactId>egeria</artifactId>
@@ -133,14 +150,20 @@
                 <type>pom</type>
             </dependency>
 
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${testng.version}</version>
+                <scope>test</scope>
+            </dependency>
+
         </dependencies>
 
     </dependencyManagement>
 
-    <dependencies>
-    </dependencies>
+
     <build>
-        <!-- Should be default, but needed to keep IntelliJ happy -->
+        <!-- Should be default, but needed to keep IntelliJ happy. Very recent versions don't need this -->
         <sourceDirectory>src/main/java</sourceDirectory>
         <testSourceDirectory>src/test/java</testSourceDirectory>
         <resources>
@@ -153,6 +176,61 @@
                 <directory>src/test/resources</directory>
             </testResource>
         </testResources>
+
+        <!-- This section provides constraints on plugin versions to use. Ideally we'd want to default to the same
+     versions that Egeria uses. However maven cannot import plugin constraints - only via parent - so we
+     have to be explicit here. Take care to keep this updated -->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${maven-dependency.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${assembly.plugin.version}</version>
+                </plugin>
+
+
+                <!-- Dependency stack for testing used in some modules -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${surefire.plugin.version}</version>
+<!--                    <configuration>-->
+<!--                        <forkCount>3</forkCount>-->
+<!--                        <reuseForks>true</reuseForks>-->
+<!--                        &lt;!&ndash;suppress UnresolvedMavenProperty &ndash;&gt;-->
+<!--                        <argLine>-Xmx1024m ${argLine}</argLine>-->
+<!--                        <systemPropertyVariables>-->
+<!--                            <org.slf4j.simpleLogger.defaultLogLevel>INFO</org.slf4j.simpleLogger.defaultLogLevel>-->
+<!--                        </systemPropertyVariables>-->
+<!--                    </configuration>-->
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.rat</groupId>
+                    <artifactId>apache-rat-plugin</artifactId>
+                    <version>${rat-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${maven-enforcer-plugin.version}</version>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
 
         <!-- Default compiler options - enable additional lint checks -->
         <plugins>
@@ -171,7 +249,12 @@
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
 
-            <!-- Validates maven & java versions -->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-assembly-plugin</artifactId>-->
+<!--            </plugin>-->
+
+            <!-- Validates maven & java versions & also reports version in ouytput log-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
@@ -217,6 +300,7 @@
                 </executions>
             </plugin>
 
+            <!-- RAT checks that all of our files contain one of the licenses we use -->
             <plugin>
                 <groupId>org.apache.rat</groupId>
                 <artifactId>apache-rat-plugin</artifactId>
@@ -273,8 +357,7 @@
             </plugin>
 
 
-            <!-- Check no unnecessary or missing dependencies           -->
-            <!-- Note test scope dependencies can't be reliably checked -->
+            <!-- Check no unnecessary or missing dependencies, and that we use consistent versions -->
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
@@ -284,9 +367,12 @@
                             <goal>analyze-only</goal>
                         </goals>
                         <configuration>
-                            <failOnWarning>false</failOnWarning>
+                            <failOnWarning>true</failOnWarning>
                             <outputXML>true</outputXML>
-                            +
+                            <ignoredUnusedDeclaredDependencies>
+                                <!-- Always exclude logback as where used it is a runtime only dependency -->
+                                <ignoredUnusedDeclaredDependency>ch.qos.logback:logback-classic</ignoredUnusedDeclaredDependency>
+                            </ignoredUnusedDeclaredDependencies>
                         </configuration>
                     </execution>
                     <execution>
@@ -294,10 +380,8 @@
                         <goals>
                             <goal>analyze-dep-mgt</goal>
                         </goals>
-                        <phase>verify</phase>
                         <configuration>
-                            <failBuild>false</failBuild>
-                            <ignoreDirect>true</ignoreDirect>
+                            <failBuild>true</failBuild>
                         </configuration>
                     </execution>
                 </executions>
