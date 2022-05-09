@@ -211,7 +211,7 @@ public class EgeriaPlatformReport
                                                                                                                serverName,
                                                                                                                platformURLRoot);
 
-                            org.odpi.openmetadata.adminservices.properties.ServerStatus adminServerStatus = serverOperationsClient.getServerStatus();
+                            org.odpi.openmetadata.adminservices.properties.ServerServicesStatus adminServerStatus = serverOperationsClient.getServerStatus();
 
                             if (adminServerStatus != null)
                             {
@@ -267,7 +267,7 @@ public class EgeriaPlatformReport
                                                                                                        serverOfInterest,
                                                                                                        platformURLRoot);
 
-                    org.odpi.openmetadata.adminservices.properties.ServerStatus adminServerStatus = serverOperationsClient.getServerStatus();
+                    org.odpi.openmetadata.adminservices.properties.ServerServicesStatus adminServerStatus = serverOperationsClient.getServerStatus();
 
                     if (adminServerStatus != null)
                     {

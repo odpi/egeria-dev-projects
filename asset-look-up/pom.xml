@@ -10,7 +10,7 @@
     <parent>
         <artifactId>egeria-dev-projects</artifactId>
         <groupId>org.odpi.egeria</groupId>
-        <version>3.6</version>
+        <version>3.8</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -38,6 +38,11 @@
         <dependency>
             <groupId>org.odpi.egeria</groupId>
             <artifactId>asset-consumer-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.odpi.egeria</groupId>
+            <artifactId>asset-consumer-server</artifactId>
         </dependency>
 
         <dependency>

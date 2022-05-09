@@ -17,7 +17,7 @@
     <!-- These are our maven 'coordinates' ie the name of the artifact and its version -->
     <groupId>org.odpi.egeria</groupId>
     <artifactId>egeria-dev-projects</artifactId>
-    <version>3.6</version>
+    <version>3.8</version>
 
     <!-- This defines the link to our sources, and is required if the artifact is published to maven central -->
     <scm>
@@ -99,14 +99,15 @@
         <module>egeria-platform-report</module>
         <module>event-display-audit-log-connector</module>
         <module>kafka-topics-capture-connector</module>
-        <module>asset-look-up</module>
+        <!--TODO: temporarily disabled whilst refactoring build/dependencies & migrating to 3.8 -->
+        <!--module>asset-look-up</module-->
         <module>asset-set-up</module>
     </modules>
 
 
     <properties>
         <!-- The version of EGERIA base libraries we are going to use -->
-        <open-metadata.version>3.6</open-metadata.version>
+        <open-metadata.version>3.8</open-metadata.version>
 
         <!-- Level of Java  -->
         <maven.compiler.source>11</maven.compiler.source>
@@ -311,7 +312,9 @@
                     <useEclipseDefaultExcludes>true</useEclipseDefaultExcludes>
                     <excludeSubProjects>true</excludeSubProjects>
                     <excludes>
-
+                        <exclude>**/target/**</exclude>
+                        <exclude>**/.vscode*/**</exclude>
+                        <exclude>**/**.code-workspace</exclude>
                     </excludes>
                     <licenseFamilies>
                         <licenseFamily implementation="org.apache.rat.license.SimpleLicenseFamily">

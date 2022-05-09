@@ -5,10 +5,10 @@ package org.odpi.openmetadata.devprojects.reports.assetlookup;
 import org.odpi.openmetadata.accessservices.assetconsumer.api.AssetConsumerEventListener;
 import org.odpi.openmetadata.accessservices.assetconsumer.client.AssetConsumer;
 import org.odpi.openmetadata.accessservices.assetconsumer.elements.MeaningElement;
-import org.odpi.openmetadata.accessservices.assetconsumer.events.AssetConsumerEvent;
+import org.odpi.openmetadata.accessservices.assetconsumer.events.AssetConsumerOutTopicEvent;
 import org.odpi.openmetadata.accessservices.assetconsumer.events.AssetConsumerEventType;
-import org.odpi.openmetadata.accessservices.assetconsumer.events.NewAssetEvent;
-import org.odpi.openmetadata.accessservices.assetconsumer.events.UpdatedAssetEvent;
+import org.odpi.openmetadata.accessservices.assetconsumer.events.*;
+
 import org.odpi.openmetadata.frameworks.connectors.properties.*;
 import org.odpi.openmetadata.http.HttpHelper;
 import org.odpi.openmetadata.platformservices.client.PlatformServicesClient;
@@ -64,11 +64,12 @@ public class AssetLookUp extends AssetConsumerEventListener
      *
      * @param event event object - call getEventType to find out what type of event.
      */
-    public void processEvent(AssetConsumerEvent event)
+    public void processEvent(AssetConsumerOutTopicEvent event)
     {
-        if (event.getEventType() == AssetConsumerEventType.NEW_ASSET_EVENT)
+        if (event.getEventType() == AssetConsumerEventType.NEW_ELEMENT_CREATED)
         {
             NewAssetEvent assetEvent = (NewAssetEvent)event;
+
 
             System.out.println("EVENT: " + assetEvent.getEventType().getEventTypeName() + " - for asset " + assetEvent.getAsset().getGUID());
         }

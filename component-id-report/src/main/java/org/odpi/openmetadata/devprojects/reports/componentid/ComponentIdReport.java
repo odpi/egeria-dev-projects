@@ -100,6 +100,7 @@ public class ComponentIdReport
         for (AccessServiceDescription serviceDescription : AccessServiceDescription.values())
         {
             ComponentDescription componentDescription = new AuditLogReportingComponent(serviceDescription.getAccessServiceCode(),
+                                                                                       serviceDescription.getAccessServiceDevelopmentStatus(),
                                                                                        serviceDescription.getAccessServiceName(),
                                                                                        serviceDescription.getAccessServiceDescription(),
                                                                                        serviceDescription.getAccessServiceWiki());
@@ -115,7 +116,8 @@ public class ComponentIdReport
         for (EngineServiceDescription serviceDescription : EngineServiceDescription.values())
         {
             ComponentDescription componentDescription = new AuditLogReportingComponent(serviceDescription.getEngineServiceCode(),
-                                                      serviceDescription.getEngineServiceName(),
+                                                                                       serviceDescription.getEngineServiceDevelopmentStatus(),
+                                                                                       serviceDescription.getEngineServiceName(),
                                                                                        serviceDescription.getEngineServiceDescription(),
                                                                                        serviceDescription.getEngineServiceWiki());
 
@@ -130,6 +132,7 @@ public class ComponentIdReport
         for (IntegrationServiceDescription serviceDescription : IntegrationServiceDescription.values())
         {
             ComponentDescription componentDescription = new AuditLogReportingComponent(serviceDescription.getIntegrationServiceCode(),
+                                                                                       serviceDescription.getIntegrationServiceDevelopmentStatus(),
                                                                                        serviceDescription.getIntegrationServiceName(),
                                                                                        serviceDescription.getIntegrationServiceDescription(),
                                                                                        serviceDescription.getIntegrationServiceWiki());
@@ -145,6 +148,7 @@ public class ComponentIdReport
         for (ViewServiceDescription serviceDescription : ViewServiceDescription.values())
         {
             ComponentDescription componentDescription = new AuditLogReportingComponent(serviceDescription.getViewServiceCode(),
+                                                                                       serviceDescription.getViewServiceDevelopmentStatus(),
                                                                                        serviceDescription.getViewServiceName(),
                                                                                        serviceDescription.getViewServiceDescription(),
                                                                                        serviceDescription.getViewServiceWiki());
@@ -160,6 +164,7 @@ public class ComponentIdReport
         for (OMRSAuditingComponent serviceDescription : OMRSAuditingComponent.values())
         {
             ComponentDescription componentDescription = new AuditLogReportingComponent(serviceDescription.getComponentId(),
+                                                                                       serviceDescription.getComponentDevelopmentStatus(),
                                                                                        serviceDescription.getComponentName(),
                                                                                        serviceDescription.getComponentType(),
                                                                                        serviceDescription.getComponentWikiURL());
