@@ -98,10 +98,11 @@
         <module>egeria-ops-utility</module>
         <module>egeria-platform-report</module>
         <module>event-display-audit-log-connector</module>
-        <module>kafka-topics-capture-connector</module>
-        <!--TODO: temporarily disabled whilst refactoring build/dependencies & migrating to 3.8 -->
-        <!--module>asset-look-up</module-->
+        <module>egeria-infrastructure-catalog-connector</module>
+        <module>asset-deploy</module>
+        <module>asset-look-up</module>
         <module>asset-set-up</module>
+        <module>database-report</module>
     </modules>
 
 

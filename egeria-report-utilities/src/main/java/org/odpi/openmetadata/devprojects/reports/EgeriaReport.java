@@ -14,8 +14,7 @@ import java.util.List;
 
 
 /**
- * EgeriaReport provides utilities to allow a report to print to the screen and create
- * a markdown file at the same time.
+ * EgeriaReport provides utilities to allow a report to print to the screen and create a markdown file at the same time.
  */
 public class EgeriaReport
 {
@@ -23,7 +22,7 @@ public class EgeriaReport
 
 
     /**
-     * Work out how many spaces to indent a line in the report.  This is used in the stdout report/
+     * Work out how many spaces to indent a line in the report.  This is used in the stdout report.
      *
      * @param indentLevel required indentation
      * @return string of blanks representing the indentation
@@ -81,17 +80,15 @@ public class EgeriaReport
      * Prints out the text for a subheading the report.
      *
      * @param indentLevel number of spaces to indent
-     * @param platformURLRoot location of the platform
+     * @param reportTitle location of the platform
      * @throws IOException problem writing file
      */
-    public  void printReportTitle(int    indentLevel,
-                                  String platformURLRoot) throws IOException
+    public void printReportTitle(int    indentLevel,
+                                 String reportTitle) throws IOException
     {
-        final String reportTitle     = "Platform report for: ";
+        System.out.println(getSpaceIndent(indentLevel) + reportTitle);
 
-        System.out.println(getSpaceIndent(indentLevel) + reportTitle + platformURLRoot);
-
-        String reportString = getHeadingLevel(indentLevel) + reportTitle  + platformURLRoot + "\n\n";
+        String reportString = getHeadingLevel(indentLevel) + reportTitle + "\n\n";
 
         fileOutStream.write(reportString.getBytes());
     }
@@ -104,8 +101,8 @@ public class EgeriaReport
      * @param titleText text to be included in the subheading
      * @throws IOException problem writing file
      */
-    public  void printReportSubheading(int    indentLevel,
-                                       String titleText) throws IOException
+    public void printReportSubheading(int    indentLevel,
+                                      String titleText) throws IOException
     {
         System.out.println(getSpaceIndent(indentLevel) + titleText);
 
@@ -123,9 +120,9 @@ public class EgeriaReport
      * @param elementText value of the element
      * @throws IOException problem writing file
      */
-    public  void printReportLine(int    indentLevel,
-                                 String elementLabel,
-                                 String elementText) throws IOException
+    public void printReportLine(int    indentLevel,
+                                String elementLabel,
+                                String elementText) throws IOException
     {
         if (elementText == null)
         {
@@ -143,7 +140,56 @@ public class EgeriaReport
 
             fileOutStream.write(reportString.getBytes());
         }
+    }
 
+
+    /**
+     * Prints out the text for a single line of the report.
+     *
+     * @param indentLevel number of spaces to indent
+     * @param reportText value to print
+     * @throws IOException problem writing file
+     */
+    public void printReportLine(int    indentLevel,
+                                String reportText) throws IOException
+    {
+        System.out.println(getSpaceIndent(indentLevel) + reportText);
+
+        fileOutStream.write(reportText.getBytes());
+    }
+
+
+    /**
+     * Prints out information about a metadata element as a single line in a table.
+     *
+     * @param indentLevel number of spaces to indent
+     * @param firstElement is the the first element (so column headings needed)
+     * @param guid unique identifier
+     * @param qualifiedName unique name
+     * @param displayName display name
+     * @param description description
+     * @throws IOException problem writing report
+     */
+    public void printElementInTable(int     indentLevel,
+                                    boolean firstElement,
+                                    String  guid,
+                                    String  qualifiedName,
+                                    String  displayName,
+                                    String  description) throws IOException
+    {
+        if (firstElement)
+        {
+            printReportLine(indentLevel, "");
+            printReportLine(indentLevel, "|----------------------------------+-----------------------------+--------------------+------------------------------|");
+            printReportLine(indentLevel, "| Unique identifier (GUID)         | Unique name (qualifiedName) | Display name       | Description                  |");
+            printReportLine(indentLevel, "|----------------------------------+-----------------------------+--------------------+------------------------------|");
+        }
+
+        printReportLine(indentLevel, "| " + guid);
+        printReportLine(indentLevel, " | " + qualifiedName);
+        printReportLine(indentLevel, " | " + displayName);
+        printReportLine(indentLevel, " | " + description);
+        printReportLine(indentLevel, " |");
     }
 
 

@@ -10,7 +10,7 @@
     <parent>
         <artifactId>egeria-dev-projects</artifactId>
         <groupId>org.odpi.egeria</groupId>
-        <version>3.8</version>
+        <version>3.8-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -21,69 +21,33 @@
         <url>http://github.com/odpi/egeria-dev-projects</url>
     </scm>
 
-    <name>Asset Set up</name>
+    <name>Asset Deploy</name>
     <description>
-        Creates sample data asset catalog entry using different client APIs.
+        Creates sample infrastructure asset catalog entries.
     </description>
 
-    <artifactId>asset-set-up</artifactId>
+    <artifactId>asset-deploy</artifactId>
 
     <dependencies>
 
-
         <dependency>
             <groupId>org.odpi.egeria</groupId>
-            <artifactId>asset-consumer-client</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.odpi.egeria</groupId>
-            <artifactId>asset-owner-client</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.odpi.egeria</groupId>
-            <artifactId>asset-manager-client</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.odpi.egeria</groupId>
-            <artifactId>community-profile-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.odpi.egeria</groupId>
-            <artifactId>community-profile-client</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.odpi.egeria</groupId>
-            <artifactId>data-manager-client</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.odpi.egeria</groupId>
-            <artifactId>digital-architecture-client</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.odpi.egeria</groupId>
-            <artifactId>open-connector-framework</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.odpi.egeria</groupId>
-            <artifactId>governance-program-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.odpi.egeria</groupId>
-            <artifactId>governance-program-client</artifactId>
+            <artifactId>it-infrastructure-api</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.odpi.egeria</groupId>
             <artifactId>it-infrastructure-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.odpi.egeria</groupId>
+            <artifactId>admin-services-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.odpi.egeria</groupId>
+            <artifactId>platform-services-client</artifactId>
         </dependency>
 
         <dependency>
