@@ -17,7 +17,7 @@
     <!-- These are our maven 'coordinates' ie the name of the artifact and its version -->
     <groupId>org.odpi.egeria</groupId>
     <artifactId>egeria-dev-projects</artifactId>
-    <version>3.8</version>
+    <version>3.9</version>
 
     <!-- This defines the link to our sources, and is required if the artifact is published to maven central -->
     <scm>
@@ -108,7 +108,7 @@
 
     <properties>
         <!-- The version of EGERIA base libraries we are going to use -->
-        <open-metadata.version>3.8</open-metadata.version>
+        <open-metadata.version>3.9</open-metadata.version>
 
         <!-- Level of Java  -->
         <maven.compiler.source>11</maven.compiler.source>
