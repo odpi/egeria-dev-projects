@@ -10,7 +10,7 @@
     <parent>
         <artifactId>egeria-dev-projects</artifactId>
         <groupId>org.odpi.egeria</groupId>
-        <version>3.8-SNAPSHOT</version>
+        <version>3.8</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -117,7 +117,45 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>analyze</id>
+                        <goals>
+                            <goal>analyze-only</goal>
+                        </goals>
+                        <configuration>
+                            <failOnWarning>true</failOnWarning>
+                            <outputXML>true</outputXML>
+                            <!-- These artifacts are needed to be present in the classpath to discover
+                            component ID, but the analyzer does not find in bytecode as we don't explicitly
+                            use them in our code - so we add here as exceptions, and merge with the top level list -->
+                            <ignoredUnusedDeclaredDependencies combine.children="append">
+                                <!-- Always exclude logback as where used it is a runtime only dependency -->
+                                <ignoredUnusedDeclaredDependency>org.odpi.egeria:cohort-registry-file-store-connector</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>org.odpi.egeria:open-metadata-archive-file-connector</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>org.odpi.egeria:open-metadata-archive-directory-connector</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>org.odpi.egeria:inmemory-repository-connector</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>org.odpi.egeria:omrs-rest-repository-connector</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>org.odpi.egeria:open-metadata-security-samples</ignoredUnusedDeclaredDependency>
+                            </ignoredUnusedDeclaredDependencies>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>depmgmt</id>
+                        <goals>
+                            <goal>analyze-dep-mgt</goal>
+                        </goals>
+                        <configuration>
+                            <failBuild>true</failBuild>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+
     </build>
 
 </project>
