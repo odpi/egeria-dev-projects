@@ -37,6 +37,7 @@ import org.odpi.openmetadata.frameworks.connectors.properties.beans.VirtualConne
 import org.odpi.openmetadata.platformservices.client.PlatformServicesClient;
 import org.odpi.openmetadata.repositoryservices.auditlog.OMRSAuditingComponent;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -701,7 +702,7 @@ public class EgeriaCataloguerIntegrationConnector extends EgeriaInfrastructureIn
 
             String dataAssetGUID = super.getContext().createDataAsset(assetProperties);
 
-            super.getContext().setupProcessCall(connectorGUID, dataAssetGUID, null, null, null, null, null);
+            super.getContext().setupProcessCall(connectorGUID, dataAssetGUID, null, new Date());
         }
 
         if (connectorConnection instanceof VirtualConnection)
