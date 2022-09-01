@@ -108,7 +108,7 @@
 
     <properties>
         <!-- The version of EGERIA base libraries we are going to use -->
-        <open-metadata.version>3.9</open-metadata.version>
+        <open-metadata.version>3.11</open-metadata.version>
 
         <!-- Level of Java  -->
         <maven.compiler.source>11</maven.compiler.source>
