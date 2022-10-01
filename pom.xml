@@ -17,13 +17,13 @@
     <!-- These are our maven 'coordinates' ie the name of the artifact and its version -->
     <groupId>org.odpi.egeria</groupId>
     <artifactId>egeria-dev-projects</artifactId>
-    <version>3.11-SNAPSHOT</version>
+    <version>3.12</version>
 
     <!-- This defines the link to our sources, and is required if the artifact is published to maven central -->
     <scm>
         <connection>scm:git:git://github.com/odpi/egeria-dev-projects.git</connection>
         <developerConnection>scm:git:ssh://github.com/odpi/egeria-dev-projects.git</developerConnection>
-        <url>http://github.com/odpi/egeria-dev-projects</url>
+        <url>https://github.com/odpi/egeria-dev-projects</url>
     </scm>
 
     <!-- Link for further information -->
@@ -108,7 +108,7 @@
 
     <properties>
         <!-- The version of EGERIA base libraries we are going to use -->
-        <open-metadata.version>3.11-SNAPSHOT</open-metadata.version>
+        <open-metadata.version>3.12</open-metadata.version>
 
         <!-- Level of Java  -->
         <maven.compiler.source>11</maven.compiler.source>

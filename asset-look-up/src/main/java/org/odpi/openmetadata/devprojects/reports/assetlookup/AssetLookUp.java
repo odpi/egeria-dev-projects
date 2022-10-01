@@ -5,6 +5,21 @@ package org.odpi.openmetadata.devprojects.reports.assetlookup;
 import org.odpi.openmetadata.accessservices.assetconsumer.client.AssetConsumer;
 import org.odpi.openmetadata.accessservices.assetconsumer.elements.MeaningElement;
 import org.odpi.openmetadata.frameworks.connectors.properties.*;
+import org.odpi.openmetadata.frameworks.connectors.properties.beans.Certification;
+import org.odpi.openmetadata.frameworks.connectors.properties.beans.Comment;
+import org.odpi.openmetadata.frameworks.connectors.properties.beans.Connection;
+import org.odpi.openmetadata.frameworks.connectors.properties.beans.ElementClassification;
+import org.odpi.openmetadata.frameworks.connectors.properties.beans.ExternalIdentifier;
+import org.odpi.openmetadata.frameworks.connectors.properties.beans.ExternalReference;
+import org.odpi.openmetadata.frameworks.connectors.properties.beans.InformalTag;
+import org.odpi.openmetadata.frameworks.connectors.properties.beans.License;
+import org.odpi.openmetadata.frameworks.connectors.properties.beans.Like;
+import org.odpi.openmetadata.frameworks.connectors.properties.beans.Location;
+import org.odpi.openmetadata.frameworks.connectors.properties.beans.Meaning;
+import org.odpi.openmetadata.frameworks.connectors.properties.beans.Rating;
+import org.odpi.openmetadata.frameworks.connectors.properties.beans.RelatedAsset;
+import org.odpi.openmetadata.frameworks.connectors.properties.beans.RelatedMediaReference;
+import org.odpi.openmetadata.frameworks.connectors.properties.beans.SchemaType;
 import org.odpi.openmetadata.http.HttpHelper;
 import org.odpi.openmetadata.platformservices.client.PlatformServicesClient;
 
@@ -21,9 +36,9 @@ import java.util.Map;
  */
 public class AssetLookUp
 {
-    private String serverName;
-    private String platformURLRoot;
-    private String clientUserId;
+    private final String serverName;
+    private final String platformURLRoot;
+    private final String clientUserId;
 
     private AssetConsumer client = null;
 
@@ -349,8 +364,8 @@ public class AssetLookUp
 
             if (assetUniverse != null)
             {
-                System.out.println(assetUniverse.getAssetTypeName() + " with GUID: " + assetUniverse.getGUID());
-                System.out.println("   " + assetUniverse.getAssetTypeName() + " inherits from " + assetUniverse.getAssetSuperTypeNames());
+                System.out.println(assetUniverse.getType().getTypeName() + " with GUID: " + assetUniverse.getGUID());
+                System.out.println("   " + assetUniverse.getType().getTypeName() + " inherits from " + assetUniverse.getType().getSuperTypeNames());
                 System.out.println("   qualifiedName: " + assetUniverse.getQualifiedName());
                 System.out.println("   displayName: " + assetUniverse.getDisplayName());
                 System.out.println("   description: " + assetUniverse.getDescription());
@@ -380,13 +395,13 @@ public class AssetLookUp
                 /*
                  * The meanings show the glossary terms that are attached via a semantic assignment relationship.
                  */
-                List<AssetMeaning> meanings = assetUniverse.getMeanings();
+                List<Meaning> meanings = assetUniverse.getMeanings();
 
                 if (meanings != null)
                 {
                     System.out.println("   assigned meanings: ");
 
-                    for (AssetMeaning meaning : meanings)
+                    for (Meaning meaning : meanings)
                     {
                         if (meaning != null)
                         {
@@ -398,7 +413,7 @@ public class AssetLookUp
                 /*
                  * The origins show where the digital resource came from, from different perspectives.
                  */
-                Map<String, String> origins = assetUniverse.getOrigins();
+                Map<String, String> origins = assetUniverse.getAssetOrigin();
                 if (origins != null)
                 {
                     System.out.println("   digital resource origins: ");
@@ -412,18 +427,18 @@ public class AssetLookUp
                     }
                 }
 
-                AssetConnections connections = assetUniverse.getConnections();
+                Connections connections = assetUniverse.getConnections();
                 if (connections != null)
                 {
                     System.out.println("   connections: ");
 
                     while (connections.hasNext())
                     {
-                        ConnectionProperties connection = connections.next();
+                        Connection connection = connections.next();
 
                         if (connection != null)
                         {
-                            System.out.println("      * " + connection.getConnectionName() + ":");
+                            System.out.println("      * " + connection.getDisplayName() + ":");
                             if (connection.getEndpoint() != null)
                             {
                                 System.out.println("          - endpoint address: " + connection.getEndpoint().getAddress());
@@ -436,21 +451,21 @@ public class AssetLookUp
                     }
                 }
 
-                List<AssetClassification> classifications = assetUniverse.getAssetClassifications();
+                List<ElementClassification> classifications = assetUniverse.getClassifications();
                 if (classifications != null)
                 {
                     System.out.println("   classifications: ");
 
-                    for (AssetClassification classification : classifications)
+                    for (ElementClassification classification : classifications)
                     {
                         if (classification != null)
                         {
-                            System.out.println("      * " + classification.getName() + " - " + classification.getProperties());
+                            System.out.println("      * " + classification.getClassificationName() + " - " + classification.getClassificationProperties());
                         }
                     }
                 }
 
-                AssetSchemaType schemaType = assetUniverse.getSchema();
+                SchemaType schemaType = assetUniverse.getSchema();
                 if (schemaType != null)
                 {
                     System.out.println("   schema: " + schemaType.getDisplayName());
@@ -459,14 +474,14 @@ public class AssetLookUp
                 AssetFeedback feedback = assetUniverse.getFeedback();
                 if (feedback != null)
                 {
-                    AssetComments comments = feedback.getComments();
+                    Comments comments = feedback.getComments();
                     if (comments != null)
                     {
                         System.out.println("   comments: ");
 
                         while (comments.hasNext())
                         {
-                            AssetComment comment = comments.next();
+                            Comment comment = comments.next();
 
                             if (comment != null)
                             {
@@ -475,14 +490,14 @@ public class AssetLookUp
                         }
                     }
 
-                    AssetInformalTags informalTags = feedback.getInformalTags();
+                    InformalTags informalTags = feedback.getInformalTags();
                     if (informalTags != null)
                     {
                         System.out.println("   informal tags: ");
 
                         while (informalTags.hasNext())
                         {
-                            AssetInformalTag informalTag = informalTags.next();
+                            InformalTag informalTag = informalTags.next();
 
                             if (informalTag != null)
                             {
@@ -491,14 +506,14 @@ public class AssetLookUp
                         }
                     }
 
-                    AssetLikes likes = feedback.getLikes();
+                    Likes likes = feedback.getLikes();
                     if (likes != null)
                     {
                         System.out.println("   likes: ");
 
                         while (likes.hasNext())
                         {
-                            AssetLike like = likes.next();
+                            Like like = likes.next();
 
                             if (like != null)
                             {
@@ -507,14 +522,14 @@ public class AssetLookUp
                         }
                     }
 
-                    AssetRatings ratings = feedback.getRatings();
+                    Ratings ratings = feedback.getRatings();
                     if (ratings != null)
                     {
                         System.out.println("   ratings: ");
 
                         while (ratings.hasNext())
                         {
-                            AssetRating rating = ratings.next();
+                            Rating rating = ratings.next();
 
                             if (rating != null)
                             {
@@ -524,30 +539,30 @@ public class AssetLookUp
                     }
                 }
 
-                AssetRelatedAssets relatedAssets = assetUniverse.getRelatedAssets();
+                RelatedAssets relatedAssets = assetUniverse.getRelatedAssets();
                 if (relatedAssets != null)
                 {
                     System.out.println("   related assets: ");
 
                     while (relatedAssets.hasNext())
                     {
-                        AssetRelatedAsset relatedAsset = relatedAssets.next();
+                        RelatedAsset relatedAsset = relatedAssets.next();
 
                         if (relatedAsset != null)
                         {
-                            System.out.println("      * " + relatedAsset.getRelationshipAttributeName() + " (" + relatedAsset.getRelationshipTypeName() + ") - " + relatedAsset.getDisplayName() + " - " + relatedAsset.getGUID());
+                            System.out.println("      * " + relatedAsset.getAttributeName() + " (" + relatedAsset.getRelationshipName() + ") - " + relatedAsset.getDisplayName() + " - " + relatedAsset.getGUID());
                         }
                     }
                 }
 
-                AssetLocations locations = assetUniverse.getKnownLocations();
+                Locations locations = assetUniverse.getKnownLocations();
                 if (locations != null)
                 {
                     System.out.println("   locations: ");
 
                     while (locations.hasNext())
                     {
-                        AssetLocation location = locations.next();
+                        Location location = locations.next();
 
                         if (location != null)
                         {
@@ -556,14 +571,14 @@ public class AssetLookUp
                     }
                 }
 
-                AssetNoteLogs noteLogs = assetUniverse.getNoteLogs();
+                NoteLogs noteLogs = assetUniverse.getNoteLogs();
                 if (noteLogs != null)
                 {
                     System.out.println("   notelogs: ");
 
                     while (noteLogs.hasNext())
                     {
-                        AssetNoteLog noteLog = noteLogs.next();
+                        NoteLog noteLog = noteLogs.next();
 
                         if (noteLog != null)
                         {
@@ -572,14 +587,14 @@ public class AssetLookUp
                     }
                 }
 
-                AssetCertifications certifications = assetUniverse.getCertifications();
+                Certifications certifications = assetUniverse.getCertifications();
                 if (certifications != null)
                 {
                     System.out.println("   certifications: ");
 
                     while (certifications.hasNext())
                     {
-                        AssetCertification certification = certifications.next();
+                        Certification certification = certifications.next();
 
                         if (certification != null)
                         {
@@ -588,14 +603,14 @@ public class AssetLookUp
                     }
                 }
 
-                AssetLicenses licenses = assetUniverse.getLicenses();
+                Licenses licenses = assetUniverse.getLicenses();
                 if (licenses != null)
                 {
                     System.out.println("   licenses: ");
 
                     while (licenses.hasNext())
                     {
-                        AssetLicense license = licenses.next();
+                        License license = licenses.next();
 
                         if (license != null)
                         {
@@ -604,14 +619,14 @@ public class AssetLookUp
                     }
                 }
 
-                AssetExternalIdentifiers externalIdentifiers = assetUniverse.getExternalIdentifiers();
+                ExternalIdentifiers externalIdentifiers = assetUniverse.getExternalIdentifiers();
                 if (externalIdentifiers != null)
                 {
                     System.out.println("   external identifiers: ");
 
                     while (externalIdentifiers.hasNext())
                     {
-                        AssetExternalIdentifier externalIdentifier = externalIdentifiers.next();
+                        ExternalIdentifier externalIdentifier = externalIdentifiers.next();
 
                         if (externalIdentifier != null)
                         {
@@ -620,14 +635,14 @@ public class AssetLookUp
                     }
                 }
 
-                AssetExternalReferences externalReferences = assetUniverse.getExternalReferences();
+                ExternalReferences externalReferences = assetUniverse.getExternalReferences();
                 if (externalReferences != null)
                 {
                     System.out.println("   external references: ");
 
                     while (externalReferences.hasNext())
                     {
-                        AssetExternalReference externalReference = externalReferences.next();
+                        ExternalReference externalReference = externalReferences.next();
 
                         if (externalReference != null)
                         {
@@ -636,14 +651,14 @@ public class AssetLookUp
                     }
                 }
 
-                AssetRelatedMediaReferences relatedMediaReferences = assetUniverse.getRelatedMediaReferences();
+                RelatedMediaReferences relatedMediaReferences = assetUniverse.getRelatedMediaReferences();
                 if (relatedMediaReferences != null)
                 {
                     System.out.println("   related media references: ");
 
                     while (relatedMediaReferences.hasNext())
                     {
-                        AssetRelatedMediaReference relatedMediaReference = relatedMediaReferences.next();
+                        RelatedMediaReference relatedMediaReference = relatedMediaReferences.next();
 
                         if (relatedMediaReference != null)
                         {
@@ -671,7 +686,7 @@ public class AssetLookUp
     /**
      * Main program that controls the operation of the platform report.  The parameters are passed space separated.
      * The  parameters are used to override the report's default values. If mode is set to "interactive"
-     * the caller is prompted for a command.  Otherwise it is assumed to be a guid
+     * the caller is prompted for a command.  Otherwise, it is assumed to be a guid
      *
      * @param args 1. service platform URL root, 2. client userId, 3. mode/guid
      */
@@ -706,7 +721,7 @@ public class AssetLookUp
         }
 
         System.out.println("===============================");
-        System.out.println("Asset Look Up   " + new Date().toString());
+        System.out.println("Asset Look Up   " + new Date());
         System.out.println("===============================");
         System.out.print("Running against server: " + serverName + " at " + platformURLRoot);
 
