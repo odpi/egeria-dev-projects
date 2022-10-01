@@ -9,9 +9,9 @@ import org.odpi.openmetadata.accessservices.datamanager.client.DatabaseManagerCl
 import org.odpi.openmetadata.accessservices.datamanager.client.ExternalReferenceManagerClient;
 import org.odpi.openmetadata.accessservices.digitalarchitecture.client.ConnectionManager;
 import org.odpi.openmetadata.accessservices.digitalarchitecture.client.LocationManager;
-import org.odpi.openmetadata.accessservices.digitalarchitecture.client.ValidValuesManager;
 import org.odpi.openmetadata.accessservices.communityprofile.properties.ActorProfileProperties;
 import org.odpi.openmetadata.accessservices.assetmanager.client.ExternalAssetManagerClient;
+import org.odpi.openmetadata.accessservices.digitalarchitecture.client.ReferenceDataManager;
 import org.odpi.openmetadata.accessservices.governanceprogram.client.GovernanceZoneManager;
 import org.odpi.openmetadata.accessservices.governanceprogram.properties.GovernanceZoneProperties;
 import org.odpi.openmetadata.accessservices.itinfrastructure.client.CapabilityManagerClient;
@@ -47,9 +47,9 @@ public class AssetSetUp
     private static final String fileName9  = "sample-data/old-market-drop-foot-weekly-measurements/week4.csv";
     private static final String fileName10 = "sample-data/old-market-drop-foot-weekly-measurements/week5.csv";
 
-    private String serverName;
-    private String platformURLRoot;
-    private String clientUserId;
+    private final String serverName;
+    private final String platformURLRoot;
+    private final String clientUserId;
 
     private AssetConsumer                  assetConsumerClient            = null;
     private CSVFileAssetOwner              csvOnboardingClient            = null;
@@ -58,9 +58,9 @@ public class AssetSetUp
     private DatabaseManagerClient          databaseManagerClient          = null;
     private ExternalReferenceManagerClient externalReferenceManagerClient = null;
     private ConnectionManager              connectionManager              = null;
-    private LocationManager                locationManager                = null;
-    private ValidValuesManager             validValuesManager             = null;
-    private CapabilityManagerClient        capabilityManagerClient        = null;
+    private LocationManager                locationManager         = null;
+    private ReferenceDataManager           validValuesManager      = null;
+    private CapabilityManagerClient        capabilityManagerClient = null;
     private GovernanceZoneManager          governanceZoneManager          = null;
 
     private Map<String, String>            assetGUIDMap = new HashMap<>();
