@@ -23,7 +23,7 @@
 
     <name>Egeria Platform Report</name>
     <description>
-        Explores and displays thee operational state of an OMAG Server Platform.
+        Explores and displays the operational state of an OMAG Server Platform.
     </description>
 
     <artifactId>egeria-platform-report</artifactId>

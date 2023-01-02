@@ -1,0 +1,49 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ * Copyright Contributors to the ODPi Egeria project.
+ */
+
+// This HAS to be the first block of the file
+pluginManagement {
+    repositories {
+        // releases
+        mavenCentral()
+        // snapshots
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        // Once you start using pluginManagement, you should explicitly add this, unless
+        // you NEVER want to use this repository
+        gradlePluginPortal()
+    }
+    plugins {
+        //id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+        id 'org.springframework.boot' version '2.7.3'
+        id 'com.github.johnrengelman.shadow' version '7.1.2'
+        id 'de.jjohannes.java-ecosystem-capabilities' version '0.4'
+    }
+}
+rootProject.name = 'egeria-dev-projects'
+
+include(':asset-deploy')
+include(':asset-look-up')
+include(':asset-set-up')
+include(':component-id-report')
+include(':database-report')
+include(':egeria-config-utility')
+include(':egeria-infrastructure-catalog-connector')
+include(':egeria-ops-utility')
+include(':egeria-platform-report')
+include(':egeria-report-utilities')
+include(':event-display-audit-log-connector')
+
+
+project(':asset-deploy').projectDir = file('asset-deploy')
+project(':asset-look-up').projectDir = file('asset-look-up')
+project(':asset-set-up').projectDir = file('asset-set-up')
+project(':component-id-report').projectDir = file('component-id-report')
+project(':database-report').projectDir = file('database-report')
+project(':egeria-config-utility').projectDir = file('egeria-config-utility')
+project(':egeria-infrastructure-catalog-connector').projectDir = file('egeria-infrastructure-catalog-connector')
+project(':egeria-ops-utility').projectDir = file('egeria-ops-utility')
+project(':egeria-platform-report').projectDir = file('egeria-platform-report')
+project(':egeria-report-utilities').projectDir = file('egeria-report-utilities')
+project(':event-display-audit-log-connector').projectDir = file('event-display-audit-log-connector')

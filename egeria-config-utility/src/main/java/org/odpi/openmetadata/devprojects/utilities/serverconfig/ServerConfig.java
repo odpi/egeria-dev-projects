@@ -49,8 +49,8 @@ public class ServerConfig
     private static final String systemUserId                              = "cocoMDS1npa";
     private static final int    maxPageSize = 600;
 
-    private String platformURLRoot;
-    private String clientUserId;
+    private final String platformURLRoot;
+    private final String clientUserId;
 
 
     /**

@@ -1,0 +1,32 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ * Copyright Contributors to the ODPi Egeria project.
+ */
+
+plugins {
+    id 'application'
+    id "com.github.johnrengelman.shadow"
+}
+
+dependencies {
+    implementation "org.odpi.egeria:audit-log-framework"
+    implementation "org.odpi.egeria:open-connector-framework"
+    implementation "org.odpi.egeria:repository-services-apis"
+    implementation "org.odpi.egeria:infrastructure-integrator-api"
+    implementation "org.odpi.egeria:it-infrastructure-api"
+    implementation "org.odpi.egeria:integration-daemon-services-api"
+    implementation "org.odpi.egeria:admin-services-api"
+    implementation "org.odpi.egeria:admin-services-client"
+    implementation "org.odpi.egeria:platform-services-client"
+    implementation "org.apache.kafka:kafka-clients"
+    runtimeOnly 'ch.qos.logback:logback-classic'
+    testImplementation 'org.odpi.egeria:open-metadata-ut'
+    testImplementation 'org.testng:testng'
+}
+
+description = 'Scavenges information from an Egeria deployment to catalog the platforms, servers, services and connectors.'
+
+java {
+    withJavadocJar()
+}
+

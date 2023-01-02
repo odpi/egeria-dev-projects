@@ -1,0 +1,30 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ * Copyright Contributors to the ODPi Egeria project.
+ */
+
+plugins {
+    id 'application'
+    id "com.github.johnrengelman.shadow"
+}
+
+dependencies {
+    implementation "org.odpi.egeria:integration-daemon-services-api"
+    implementation "org.odpi.egeria:integration-daemon-services-client"
+    implementation "org.odpi.egeria:admin-services-api"
+    implementation "org.odpi.egeria:admin-services-client"
+    implementation "org.odpi.egeria:platform-services-client"
+    implementation "org.odpi.egeria:http-helper"
+    runtimeOnly 'ch.qos.logback:logback-classic'
+}
+
+description = 'Simple commands to start and stop OMAG Servers.'
+
+java {
+    withJavadocJar()
+}
+
+shadowJar {
+    mainClassName = 'org.odpi.openmetadata.devprojects.utilities.serverops.ServerOps'
+    archiveClassifier = 'jar-with-dependencies'
+}

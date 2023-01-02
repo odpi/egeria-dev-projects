@@ -1,0 +1,33 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ * Copyright Contributors to the ODPi Egeria project.
+ */
+
+plugins {
+    id 'application'
+    id "com.github.johnrengelman.shadow"
+}
+
+dependencies {
+    implementation project(":egeria-report-utilities")
+    implementation "org.odpi.egeria:open-connector-framework"
+    implementation "org.odpi.egeria:repository-services-apis"
+    implementation "org.odpi.egeria:repository-services-client"
+    implementation "org.odpi.egeria:admin-services-api"
+    implementation "org.odpi.egeria:admin-services-client"
+    implementation "org.odpi.egeria:platform-services-api"
+    implementation "org.odpi.egeria:platform-services-client"
+    implementation "org.odpi.egeria:http-helper"
+    runtimeOnly 'ch.qos.logback:logback-classic'
+}
+
+description = 'Explores and displays the operational state of an OMAG Server Platform.'
+
+java {
+    withJavadocJar()
+}
+
+shadowJar {
+    mainClassName = 'org.odpi.openmetadata.devprojects.reports.platform.EgeriaPlatformReport'
+    archiveClassifier = 'jar-with-dependencies'
+}

@@ -1,0 +1,38 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ * Copyright Contributors to the ODPi Egeria project.
+ */
+
+plugins {
+    id 'application'
+    id "com.github.johnrengelman.shadow"
+}
+
+dependencies {
+    implementation "org.odpi.egeria:open-connector-framework"
+    implementation "org.odpi.egeria:asset-consumer-client"
+    implementation "org.odpi.egeria:asset-manager-client"
+    implementation "org.odpi.egeria:asset-owner-client"
+    implementation "org.odpi.egeria:community-profile-api"
+    implementation "org.odpi.egeria:community-profile-client"
+    implementation "org.odpi.egeria:data-manager-client"
+    implementation "org.odpi.egeria:digital-architecture-client"
+    implementation "org.odpi.egeria:governance-program-api"
+    implementation "org.odpi.egeria:governance-program-client"
+    implementation "org.odpi.egeria:it-infrastructure-client"
+    implementation "org.odpi.egeria:platform-services-client"
+    implementation "org.odpi.egeria:http-helper"
+    runtimeOnly 'ch.qos.logback:logback-classic'
+    compileOnly 'com.fasterxml.jackson.core:jackson-annotations'
+}
+
+description = 'Creates sample data asset catalog entry using different client APIs.'
+
+java {
+    withJavadocJar()
+}
+
+shadowJar {
+    mainClassName = 'org.odpi.openmetadata.devprojects.utilities.assetsetup.AssetSetUp'
+    archiveClassifier = 'jar-with-dependencies'
+}

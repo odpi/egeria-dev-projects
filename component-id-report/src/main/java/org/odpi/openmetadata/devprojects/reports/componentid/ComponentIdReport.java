@@ -166,7 +166,7 @@ public class ComponentIdReport
             ComponentDescription componentDescription = new AuditLogReportingComponent(serviceDescription.getComponentId(),
                                                                                        serviceDescription.getComponentDevelopmentStatus(),
                                                                                        serviceDescription.getComponentName(),
-                                                                                       serviceDescription.getComponentType(),
+                                                                                       serviceDescription.getComponentDescription(),
                                                                                        serviceDescription.getComponentWikiURL());
 
             ComponentDescription existingComponentDescription = report.put(componentDescription.getComponentId(), componentDescription);
@@ -203,7 +203,7 @@ public class ComponentIdReport
         {
             ComponentDescription componentDescription = report.get(componentId);
 
-            String reportLine = "| " + componentDescription.getComponentId() + " | " + componentDescription.getComponentName() + " | " + componentDescription.getComponentType() + " | " + componentDescription.getComponentDevelopmentStatus().getName() + " | " + componentDescription.getComponentWikiURL() + " |\n";
+            String reportLine = "| " + componentDescription.getComponentId() + " | " + componentDescription.getComponentName() + " | " + componentDescription.getComponentDescription() + " | " + componentDescription.getComponentDevelopmentStatus().getName() + " | " + componentDescription.getComponentWikiURL() + " |\n";
             fileOutStream.write(reportLine.getBytes());
             System.out.print(reportLine);
         }

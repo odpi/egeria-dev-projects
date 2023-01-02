@@ -442,7 +442,7 @@ public class EgeriaCataloguerIntegrationConnector extends EgeriaInfrastructureIn
                                     CommonServicesDescription.REPOSITORY_SERVICES.getServiceName() + ":" + cohortConfig.getCohortName(),
                                     serverConfig.getLocalServerName(),
                                     OMRSAuditingComponent.OMRS_TOPIC_CONNECTOR.getComponentName() + ":Registration",
-                                    OMRSAuditingComponent.OMRS_TOPIC_CONNECTOR.getComponentType(),
+                                    OMRSAuditingComponent.OMRS_TOPIC_CONNECTOR.getComponentDescription(),
                                     cohortConfig.getCohortOMRSRegistrationTopicConnection());
                 }
 
@@ -454,7 +454,7 @@ public class EgeriaCataloguerIntegrationConnector extends EgeriaInfrastructureIn
                                     CommonServicesDescription.REPOSITORY_SERVICES.getServiceName() + ":" + cohortConfig.getCohortName(),
                                     serverConfig.getLocalServerName(),
                                     OMRSAuditingComponent.OMRS_TOPIC_CONNECTOR.getComponentName() + ":Types",
-                                    OMRSAuditingComponent.OMRS_TOPIC_CONNECTOR.getComponentType(),
+                                    OMRSAuditingComponent.OMRS_TOPIC_CONNECTOR.getComponentDescription(),
                                     cohortConfig.getCohortOMRSTypesTopicConnection());
                 }
 
@@ -466,7 +466,7 @@ public class EgeriaCataloguerIntegrationConnector extends EgeriaInfrastructureIn
                                     CommonServicesDescription.REPOSITORY_SERVICES.getServiceName() + ":" + cohortConfig.getCohortName(),
                                     serverConfig.getLocalServerName(),
                                     OMRSAuditingComponent.OMRS_TOPIC_CONNECTOR.getComponentName() + ":Instances",
-                                    OMRSAuditingComponent.OMRS_TOPIC_CONNECTOR.getComponentType(),
+                                    OMRSAuditingComponent.OMRS_TOPIC_CONNECTOR.getComponentDescription(),
                                     cohortConfig.getCohortOMRSInstancesTopicConnection());
                 }
 
@@ -478,7 +478,7 @@ public class EgeriaCataloguerIntegrationConnector extends EgeriaInfrastructureIn
                                     CommonServicesDescription.REPOSITORY_SERVICES.getServiceName() + ":" + cohortConfig.getCohortName(),
                                     serverConfig.getLocalServerName(),
                                     OMRSAuditingComponent.OMRS_TOPIC_CONNECTOR.getComponentName(),
-                                    OMRSAuditingComponent.OMRS_TOPIC_CONNECTOR.getComponentType(),
+                                    OMRSAuditingComponent.OMRS_TOPIC_CONNECTOR.getComponentDescription(),
                                     cohortConfig.getCohortOMRSTopicConnection());
                 }
 
@@ -490,7 +490,7 @@ public class EgeriaCataloguerIntegrationConnector extends EgeriaInfrastructureIn
                                     CommonServicesDescription.REPOSITORY_SERVICES.getServiceName() + ":" + cohortConfig.getCohortName() + ":Registry",
                                     serverConfig.getLocalServerName(),
                                     OMRSAuditingComponent.COHORT_REGISTRY.getComponentName(),
-                                    OMRSAuditingComponent.COHORT_REGISTRY.getComponentType(),
+                                    OMRSAuditingComponent.COHORT_REGISTRY.getComponentDescription(),
                                     cohortConfig.getCohortRegistryConnection());
                 }
             }
@@ -532,7 +532,7 @@ public class EgeriaCataloguerIntegrationConnector extends EgeriaInfrastructureIn
                                     accessServiceConfig.getAccessServiceFullName(),
                                     serverConfig.getLocalServerName(),
                                     OMRSAuditingComponent.OMAS_IN_TOPIC.getComponentName(),
-                                    OMRSAuditingComponent.OMAS_IN_TOPIC.getComponentType(),
+                                    OMRSAuditingComponent.OMAS_IN_TOPIC.getComponentDescription(),
                                     accessServiceConfig.getAccessServiceInTopic());
                 }
 
@@ -542,7 +542,7 @@ public class EgeriaCataloguerIntegrationConnector extends EgeriaInfrastructureIn
                                     accessServiceConfig.getAccessServiceFullName(),
                                     serverConfig.getLocalServerName(),
                                     OMRSAuditingComponent.OMAS_OUT_TOPIC.getComponentName(),
-                                    OMRSAuditingComponent.OMAS_OUT_TOPIC.getComponentType(),
+                                    OMRSAuditingComponent.OMAS_OUT_TOPIC.getComponentDescription(),
                                     accessServiceConfig.getAccessServiceOutTopic());
                 }
             }
@@ -722,7 +722,7 @@ public class EgeriaCataloguerIntegrationConnector extends EgeriaInfrastructureIn
                                         serviceName + ":" + connectorName,
                                         serverName,
                                         OMRSAuditingComponent.OPEN_METADATA_TOPIC_CONNECTOR.getComponentName(),
-                                        OMRSAuditingComponent.OPEN_METADATA_TOPIC_CONNECTOR.getComponentType(),
+                                        OMRSAuditingComponent.OPEN_METADATA_TOPIC_CONNECTOR.getComponentDescription(),
                                         embeddedConnection.getEmbeddedConnection());
                     }
                 }

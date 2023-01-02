@@ -28,7 +28,7 @@ import java.util.Map;
 
 
 /**
- * AssetSetUp illustrates the use of the a variety of OMAS APIs to catalog a file in the open metadata ecosystem.
+ * AssetSetUp illustrates the use of a variety of OMAS APIs to catalog a file in the open metadata ecosystem.
  */
 public class AssetSetUp
 {
@@ -58,14 +58,14 @@ public class AssetSetUp
     private DatabaseManagerClient          databaseManagerClient          = null;
     private ExternalReferenceManagerClient externalReferenceManagerClient = null;
     private ConnectionManager              connectionManager              = null;
-    private LocationManager                locationManager         = null;
-    private ReferenceDataManager           validValuesManager      = null;
-    private CapabilityManagerClient        capabilityManagerClient = null;
+    private LocationManager                locationManager                = null;
+    private ReferenceDataManager           validValuesManager             = null;
+    private CapabilityManagerClient        capabilityManagerClient        = null;
     private GovernanceZoneManager          governanceZoneManager          = null;
 
-    private Map<String, String>            assetGUIDMap = new HashMap<>();
-    private Map<String, String>            assetQNMap = new HashMap<>();
-    private Map<String, String>            orgMap = new HashMap<>();
+    private final Map<String, String> assetGUIDMap = new HashMap<>();
+    private final Map<String, String> assetQNMap   = new HashMap<>();
+    private final Map<String, String> orgMap       = new HashMap<>();
 
 
 
