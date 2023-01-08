@@ -27,6 +27,7 @@ import org.odpi.openmetadata.frameworks.connectors.properties.beans.Connection;
 import org.odpi.openmetadata.http.HttpHelper;
 import org.odpi.openmetadata.platformservices.client.PlatformServicesClient;
 import org.odpi.openmetadata.platformservices.properties.OMAGServerInstanceHistory;
+import org.odpi.openmetadata.platformservices.properties.ServerStatus;
 import org.odpi.openmetadata.repositoryservices.clients.MetadataHighwayServicesClient;
 import org.odpi.openmetadata.repositoryservices.connectors.stores.cohortregistrystore.properties.MemberRegistration;
 import org.odpi.openmetadata.repositoryservices.properties.CohortConnectionStatus;
@@ -180,7 +181,7 @@ public class EgeriaPlatformReport
                     {
                         if (serverName != null)
                         {
-                            org.odpi.openmetadata.platformservices.properties.ServerStatus platformServerStatus = platformServicesClient.getServerStatus(clientUserId, serverName);
+                            ServerStatus platformServerStatus = platformServicesClient.getServerStatus(clientUserId, serverName);
 
                             if (platformServerStatus != null)
                             {

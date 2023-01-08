@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class EgeriaReport
 {
-    private FileOutputStream fileOutStream;
+    private final FileOutputStream fileOutStream;
 
 
     /**
@@ -289,6 +289,8 @@ public class EgeriaReport
 
     /**
      * This adds the last line to the report.
+     *
+     * @throws IOException unable to write the report
      */
     public void closeReport() throws IOException
     {

@@ -15,6 +15,7 @@ dependencies {
     implementation "org.odpi.egeria:admin-services-client"
     implementation "org.odpi.egeria:platform-services-client"
     implementation "org.odpi.egeria:http-helper"
+    implementation 'org.odpi.egeria:ffdc-services:3.15-SNAPSHOT'
     runtimeOnly 'ch.qos.logback:logback-classic'
 }
 

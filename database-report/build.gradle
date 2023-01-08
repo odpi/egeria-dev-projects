@@ -9,7 +9,7 @@ plugins {
 }
 
 dependencies {
-    implementation "org.odpi.egeria:egeria-report-utilities"
+    implementation project(":egeria-report-utilities")
     implementation "org.odpi.egeria:open-connector-framework"
     implementation "org.odpi.egeria:data-manager-api"
     implementation "org.odpi.egeria:data-manager-client"

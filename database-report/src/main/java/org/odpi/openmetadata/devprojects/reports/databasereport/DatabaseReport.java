@@ -133,7 +133,7 @@ public class DatabaseReport
 
         String command = null;
         int    pageSize = 10;
-        int    startFrom = 0 - pageSize;
+        int    startFrom = - pageSize;
 
         try
         {
@@ -226,7 +226,7 @@ public class DatabaseReport
         {
             System.out.print("| " + databaseElement.getElementHeader().getGUID());
             System.out.print(" | " + databaseElement.getDatabaseProperties().getQualifiedName());
-            System.out.print(" | " + databaseElement.getDatabaseProperties().getDisplayName());
+            System.out.print(" | " + databaseElement.getDatabaseProperties().getName());
             System.out.print(" | " + databaseElement.getDatabaseProperties().getDescription());
             System.out.println(" |");
         }
@@ -244,16 +244,16 @@ public class DatabaseReport
         {
             DatabaseElement databaseElement = databaseManagerClient.getDatabaseByGUID(clientUserId, databaseGUID);
 
-            EgeriaReport report = new EgeriaReport("Database " + databaseElement.getDatabaseProperties().getDisplayName());
+            EgeriaReport report = new EgeriaReport("Database " + databaseElement.getDatabaseProperties().getName());
 
             final String reportTitle = "Database report for: ";
-            report.printReportTitle(0, reportTitle + databaseElement.getDatabaseProperties().getDisplayName() + " on server: " + serverName);
+            report.printReportTitle(0, reportTitle + databaseElement.getDatabaseProperties().getName() + " on server: " + serverName);
 
             report.printElementInTable(0,
                                        true,
                                        databaseElement.getElementHeader().getGUID(),
                                        databaseElement.getDatabaseProperties().getQualifiedName(),
-                                       databaseElement.getDatabaseProperties().getDisplayName(),
+                                       databaseElement.getDatabaseProperties().getName(),
                                        databaseElement.getDatabaseProperties().getDescription());
 
             /*
@@ -490,7 +490,7 @@ public class DatabaseReport
                     DatabaseSchemaProperties databaseSchemaProperties = new DatabaseSchemaProperties();
 
                     databaseSchemaProperties.setQualifiedName(databaseName + "." + schemaName);
-                    databaseSchemaProperties.setDisplayName(schemaName);
+                    databaseSchemaProperties.setName(schemaName);
                     databaseSchemaProperties.setDescription("Database schema definition called " + schemaName + " with " + numberOfTables + " tables.");
 
                     String databaseSchemaGUID = databaseManagerClient.createDatabaseSchema(clientUserId,

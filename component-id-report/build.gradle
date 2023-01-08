@@ -14,12 +14,12 @@ dependencies {
     implementation "org.odpi.egeria:repository-services-apis"
     implementation "org.odpi.egeria:admin-services-api"
     implementation "org.odpi.egeria:integration-daemon-services-registration"
-    implementation "org.odpi.egeria:cohort-registry-file-store-connector"
-    implementation "org.odpi.egeria:open-metadata-archive-file-connector"
-    implementation "org.odpi.egeria:open-metadata-archive-directory-connector"
-    implementation "org.odpi.egeria:inmemory-repository-connector"
-    implementation "org.odpi.egeria:omrs-rest-repository-connector"
-    implementation "org.odpi.egeria:open-metadata-security-samples"
+    runtimeOnly "org.odpi.egeria:cohort-registry-file-store-connector"
+    runtimeOnly "org.odpi.egeria:open-metadata-archive-file-connector"
+    runtimeOnly "org.odpi.egeria:open-metadata-archive-directory-connector"
+    runtimeOnly "org.odpi.egeria:inmemory-repository-connector"
+    runtimeOnly "org.odpi.egeria:omrs-rest-repository-connector"
+    runtimeOnly "org.odpi.egeria:open-metadata-security-samples"
     runtimeOnly 'ch.qos.logback:logback-classic'
 }
 
