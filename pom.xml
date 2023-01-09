@@ -125,7 +125,7 @@
         <rat-plugin.version>0.13</rat-plugin.version>
         <surefire.plugin.version>3.0.0-M6</surefire.plugin.version>
         <testng.version>7.6.0</testng.version>
-        <assembly.plugin.version>3.3.0</assembly.plugin.version>
+        <assembly.plugin.version>3.4.2</assembly.plugin.version>
 
     </properties>
 
