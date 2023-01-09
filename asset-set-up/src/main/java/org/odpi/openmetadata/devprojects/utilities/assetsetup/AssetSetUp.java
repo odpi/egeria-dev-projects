@@ -21,6 +21,7 @@ import org.odpi.openmetadata.frameworks.connectors.ffdc.PropertyServerException;
 import org.odpi.openmetadata.frameworks.connectors.ffdc.UserNotAuthorizedException;
 import org.odpi.openmetadata.frameworks.connectors.properties.AssetUniverse;
 import org.odpi.openmetadata.http.HttpHelper;
+import org.odpi.openmetadata.platformservices.client.PlatformServicesClient;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +29,7 @@ import java.util.Map;
 
 
 /**
- * AssetSetUp illustrates the use of the a variety of OMAS APIs to catalog a file in the open metadata ecosystem.
+ * AssetSetUp illustrates the use of a variety of OMAS APIs to catalog a file in the open metadata ecosystem.
  */
 public class AssetSetUp
 {
@@ -58,14 +59,14 @@ public class AssetSetUp
     private DatabaseManagerClient          databaseManagerClient          = null;
     private ExternalReferenceManagerClient externalReferenceManagerClient = null;
     private ConnectionManager              connectionManager              = null;
-    private LocationManager                locationManager         = null;
-    private ReferenceDataManager           validValuesManager      = null;
-    private CapabilityManagerClient        capabilityManagerClient = null;
+    private LocationManager                locationManager                = null;
+    private ReferenceDataManager           validValuesManager             = null;
+    private CapabilityManagerClient        capabilityManagerClient        = null;
     private GovernanceZoneManager          governanceZoneManager          = null;
 
-    private Map<String, String>            assetGUIDMap = new HashMap<>();
-    private Map<String, String>            assetQNMap = new HashMap<>();
-    private Map<String, String>            orgMap = new HashMap<>();
+    private final Map<String, String> assetGUIDMap = new HashMap<>();
+    private final Map<String, String> assetQNMap   = new HashMap<>();
+    private final Map<String, String> orgMap       = new HashMap<>();
 
 
 
@@ -103,6 +104,38 @@ public class AssetSetUp
             System.out.println("There was a " + error.getClass().getName() + " exception when creating the clients.  Error message is: " + error.getMessage());
             System.exit(-1);
         }
+    }
+
+
+    /**
+     * Retrieve the version of the platform.  This fails if the platform is not running or the endpoint is populated by a service that is not an
+     * OMAG Server Platform.
+     *
+     * @return platform version or null
+     */
+    private String getPlatformOrigin()
+    {
+        try
+        {
+            /*
+             * This client is from the platform services module and queries the runtime state of the platform and the servers that are running on it.
+             */
+            PlatformServicesClient platformServicesClient = new PlatformServicesClient("MyPlatform", platformURLRoot);
+
+            /*
+             * This is the first call to the platform and determines the version of the software.
+             * If the platform is not running, or the remote service is not an OMAG Server Platform,
+             * the utility fails at this point.
+             */
+            return platformServicesClient.getPlatformOrigin(clientUserId);
+        }
+        catch (Exception error)
+        {
+            System.out.println("\n\nThere was an " + error.getClass().getName() + " exception when calling the platform.  Error message is: " + error.getMessage());
+            System.out.println("Ensure the platform URl is correct and the platform is running");
+        }
+
+        return null;
     }
 
 
@@ -181,7 +214,7 @@ public class AssetSetUp
         {
             /*
              * This creates the asset for the file - and also assets for the directories above if they do not already exist.  The call to
-             * addAssetsToMaps saves all of the guids for later processing.
+             * addAssetsToMaps saves all the guids for later processing.
              */
             String assetGUID = this.addAssetsToMaps(csvOnboardingClient.addCSVFileToCatalog(clientUserId,
                                                                                             fileName,
@@ -385,6 +418,18 @@ public class AssetSetUp
         try
         {
             AssetSetUp assetSetUp = new AssetSetUp(serverName, platformURLRoot, clientUserId);
+
+            String platformOrigin = assetSetUp.getPlatformOrigin();
+
+            if (platformOrigin != null)
+            {
+                System.out.print(" - " + platformOrigin);
+            }
+            else
+            {
+                System.out.println();
+                System.exit(-1);
+            }
 
             assetSetUp.run();
         }

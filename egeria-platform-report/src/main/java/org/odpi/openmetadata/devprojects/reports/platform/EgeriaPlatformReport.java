@@ -27,6 +27,7 @@ import org.odpi.openmetadata.frameworks.connectors.properties.beans.Connection;
 import org.odpi.openmetadata.http.HttpHelper;
 import org.odpi.openmetadata.platformservices.client.PlatformServicesClient;
 import org.odpi.openmetadata.platformservices.properties.OMAGServerInstanceHistory;
+import org.odpi.openmetadata.platformservices.properties.ServerStatus;
 import org.odpi.openmetadata.repositoryservices.clients.MetadataHighwayServicesClient;
 import org.odpi.openmetadata.repositoryservices.connectors.stores.cohortregistrystore.properties.MemberRegistration;
 import org.odpi.openmetadata.repositoryservices.properties.CohortConnectionStatus;
@@ -46,10 +47,10 @@ import java.util.Set;
  */
 public class EgeriaPlatformReport
 {
-    private String           serverOfInterest;
-    private String           platformURLRoot;
-    private String           clientUserId;
-    private EgeriaReport     report;
+    private final String       serverOfInterest;
+    private final String       platformURLRoot;
+    private final String       clientUserId;
+    private final EgeriaReport report;
 
     /**
      * Set up the parameters for the sample.
@@ -180,7 +181,7 @@ public class EgeriaPlatformReport
                     {
                         if (serverName != null)
                         {
-                            org.odpi.openmetadata.platformservices.properties.ServerStatus platformServerStatus = platformServicesClient.getServerStatus(clientUserId, serverName);
+                            ServerStatus platformServerStatus = platformServicesClient.getServerStatus(clientUserId, serverName);
 
                             if (platformServerStatus != null)
                             {
@@ -311,12 +312,10 @@ public class EgeriaPlatformReport
 
                                     cohortDetails.setConnectionStatus(cohortDescription.getConnectionStatus());
 
-                                    cohortDetails.setLocalRegistration(metadataHighwayServicesClient.getLocalRegistration(serverDetails.getServerName(),
-                                                                                                                          clientUserId,
+                                    cohortDetails.setLocalRegistration(metadataHighwayServicesClient.getLocalRegistration(clientUserId,
                                                                                                                           cohortDescription.getCohortName()));
 
-                                    cohortDetails.setRemoteRegistrations(metadataHighwayServicesClient.getRemoteRegistrations(serverDetails.getServerName(),
-                                                                                                                              clientUserId,
+                                    cohortDetails.setRemoteRegistrations(metadataHighwayServicesClient.getRemoteRegistrations(clientUserId,
                                                                                                                               cohortDescription.getCohortName()));
                                 }
                             }

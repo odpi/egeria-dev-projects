@@ -95,6 +95,10 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.odpi.egeria</groupId>
+            <artifactId>platform-services-client</artifactId>
+        </dependency>
 
     </dependencies>
 

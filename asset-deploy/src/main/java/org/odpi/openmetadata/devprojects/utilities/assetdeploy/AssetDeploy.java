@@ -26,9 +26,9 @@ import java.util.List;
  */
 public class AssetDeploy
 {
-    private String platformURLRoot;
-    private String clientUserId;
-    private String serverName;
+    private final String platformURLRoot;
+    private final String clientUserId;
+    private final String serverName;
 
 
     /**

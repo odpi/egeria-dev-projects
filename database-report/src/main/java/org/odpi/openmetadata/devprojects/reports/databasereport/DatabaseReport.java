@@ -29,9 +29,10 @@ import java.util.List;
  */
 public class DatabaseReport
 {
-    private String serverName;
-    private String platformURLRoot;
-    private String clientUserId;
+    private final String serverName;
+    private final String platformURLRoot;
+    private final String clientUserId;
+
 
     private MetadataSourceClient  metadataSourceClient  = null;
     private DatabaseManagerClient databaseManagerClient = null;
@@ -123,7 +124,7 @@ public class DatabaseReport
 
 
     /**
-     * Locate an database to retrieve.  The user issues a number of search requests to get to a point where they are select an database by guid.
+     * Locate a database to retrieve.  The user issues a number of search requests to get to a point where they are select a database by guid.
      */
     private void locateDatabase()
     {
@@ -132,15 +133,15 @@ public class DatabaseReport
 
         String command = null;
         int    pageSize = 10;
-        int    startFrom = 0 - pageSize;
+        int    startFrom = - pageSize;
 
         try
         {
             do
             {
                 startFrom = startFrom + pageSize;
-
-                List<DatabaseElement> databases = databaseManagerClient.findDatabases(clientUserId, "*", startFrom, pageSize);
+// dw - I changed the search string below to .* rather than *
+                List<DatabaseElement> databases = databaseManagerClient.findDatabases(clientUserId, ".*", startFrom, pageSize);
 
                 if (databases != null)
                 {
@@ -189,10 +190,12 @@ public class DatabaseReport
                     if (startFrom == 0)
                     {
                         System.out.println("There are no databases in the catalog ... " );
+                        break;
                     }
                     else
                     {
                         System.out.println("There are no more databases to retrieve from the catalog ... " );
+                        break;
                     }
                 }
             } while (! endInteractiveMode.equals(command));
@@ -208,7 +211,7 @@ public class DatabaseReport
      * This method displays a summary of a retrieved database.
      *
      * @param databaseElement properties of a database
-     * @param firstDatabase is the the first database and so should the table heading be listed
+     * @param firstDatabase is the first database and so should the table heading be listed
      */
     private void displayDatabaseSummary(DatabaseElement databaseElement,
                                         boolean         firstDatabase)
@@ -223,7 +226,7 @@ public class DatabaseReport
         {
             System.out.print("| " + databaseElement.getElementHeader().getGUID());
             System.out.print(" | " + databaseElement.getDatabaseProperties().getQualifiedName());
-            System.out.print(" | " + databaseElement.getDatabaseProperties().getDisplayName());
+            System.out.print(" | " + databaseElement.getDatabaseProperties().getName());
             System.out.print(" | " + databaseElement.getDatabaseProperties().getDescription());
             System.out.println(" |");
         }
@@ -241,16 +244,16 @@ public class DatabaseReport
         {
             DatabaseElement databaseElement = databaseManagerClient.getDatabaseByGUID(clientUserId, databaseGUID);
 
-            EgeriaReport report = new EgeriaReport("Database " + databaseElement.getDatabaseProperties().getDisplayName());
+            EgeriaReport report = new EgeriaReport("Database " + databaseElement.getDatabaseProperties().getName());
 
             final String reportTitle = "Database report for: ";
-            report.printReportTitle(0, reportTitle + databaseElement.getDatabaseProperties().getDisplayName() + " on server: " + serverName);
+            report.printReportTitle(0, reportTitle + databaseElement.getDatabaseProperties().getName() + " on server: " + serverName);
 
             report.printElementInTable(0,
                                        true,
                                        databaseElement.getElementHeader().getGUID(),
                                        databaseElement.getDatabaseProperties().getQualifiedName(),
-                                       databaseElement.getDatabaseProperties().getDisplayName(),
+                                       databaseElement.getDatabaseProperties().getName(),
                                        databaseElement.getDatabaseProperties().getDescription());
 
             /*
@@ -270,7 +273,7 @@ public class DatabaseReport
     /**
      * Display the database schemas for a database.
      *
-     * @param report report to add content to
+     * @param report report to accumulate content
      * @param indentLevel level of indent for the report
      * @param databaseGUID unique identifier of the database
      */
@@ -311,7 +314,7 @@ public class DatabaseReport
     /**
      * Display the tables for either a database or a database schema.
      *
-     * @param report report to add content to
+     * @param report report to accumulate content
      * @param indentLevel level of indent for the report
      * @param parentGUID unique id for database/database schema
      */
@@ -357,7 +360,7 @@ public class DatabaseReport
     /**
      * Display the columns for a database table.
      *
-     * @param report report to add content to
+     * @param report report to accumulate content
      * @param indentLevel level of indent for the report
      * @param tableGUID unique id for database table
      */
@@ -487,7 +490,7 @@ public class DatabaseReport
                     DatabaseSchemaProperties databaseSchemaProperties = new DatabaseSchemaProperties();
 
                     databaseSchemaProperties.setQualifiedName(databaseName + "." + schemaName);
-                    databaseSchemaProperties.setDisplayName(schemaName);
+                    databaseSchemaProperties.setName(schemaName);
                     databaseSchemaProperties.setDescription("Database schema definition called " + schemaName + " with " + numberOfTables + " tables.");
 
                     String databaseSchemaGUID = databaseManagerClient.createDatabaseSchema(clientUserId,
@@ -636,7 +639,7 @@ public class DatabaseReport
     /**
      * Main program that controls the operation of the platform report.  The parameters are passed space separated.
      * The parameters are used to override the report's default values. If mode is set to "interactive"
-     * the caller is prompted for a command.  Otherwise it is assumed to be a guid
+     * the caller is prompted for a command.  Otherwise, it is assumed to be a guid.
      *
      * @param args 1. service platform URL root, 2. client userId, 3. mode/guid
      */
@@ -645,10 +648,10 @@ public class DatabaseReport
         final String interactiveMode = "interactive";
         final String samplesMode     = "samples";
 
-        String  serverName = "mds1";
-        String  platformURLRoot = "https://localhost:9443";
-        String  clientUserId = "peterprofile";
-        String  mode = interactiveMode;
+        String serverName = "cocoMDS1";
+        String platformURLRoot = "https://localhost:9444";
+        String clientUserId = "peterprofile";
+        String  mode = samplesMode;
 
         if (args.length > 0)
         {
@@ -671,7 +674,7 @@ public class DatabaseReport
         }
 
         System.out.println("===============================");
-        System.out.println("Database Report   " + new Date().toString());
+        System.out.println("Database Report   " + new Date());
         System.out.println("===============================");
         System.out.print("Running against server: " + serverName + " at " + platformURLRoot);
 

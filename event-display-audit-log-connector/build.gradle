@@ -1,0 +1,16 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ * Copyright Contributors to the ODPi Egeria project.
+ */
+
+
+dependencies {
+    implementation "org.odpi.egeria:open-connector-framework"
+    implementation "org.odpi.egeria:repository-services-apis"
+}
+
+description = 'Event Display Audit Log Store Connector.'
+
+java {
+    withJavadocJar()
+}

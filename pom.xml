@@ -108,7 +108,7 @@
 
     <properties>
         <!-- The version of EGERIA base libraries we are going to use -->
-        <open-metadata.version>3.12</open-metadata.version>
+        <open-metadata.version>3.14</open-metadata.version>
 
         <!-- Level of Java  -->
         <maven.compiler.source>11</maven.compiler.source>
@@ -316,6 +316,7 @@
                         <exclude>**/target/**</exclude>
                         <exclude>**/.vscode*/**</exclude>
                         <exclude>**/**.code-workspace</exclude>
+                        <exclude>gradle/wrapper/**</exclude>
                     </excludes>
                     <licenseFamilies>
                         <licenseFamily implementation="org.apache.rat.license.SimpleLicenseFamily">

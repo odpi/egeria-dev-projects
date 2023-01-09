@@ -1,0 +1,162 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ * Copyright Contributors to the ODPi Egeria project.
+ */
+
+// Allow use of maven central to pickup additional plugins
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+plugins {
+    id 'java-library'
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+    id 'idea'
+    // Checks for unnecessary & problematic dependencies
+    id 'com.autonomousapps.dependency-analysis' version "1.13.1"
+    // helps resolve log implementation clashes
+    id 'dev.jacomet.logging-capabilities' version "0.10.0"
+    // This plugin helps resolve jakarta/javax clashes
+    id 'de.jjohannes.java-ecosystem-capabilities' version "0.4"
+}
+
+/*
+ * Configuration for all projects - INCLUDING this one
+ */
+
+allprojects {
+
+    group = 'org.odpi.egeria'
+    version = '1.0-SNAPSHOT'
+
+    // Mostly java, so default to this for now
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+    apply plugin: 'de.jjohannes.java-ecosystem-capabilities'
+    apply plugin: 'dev.jacomet.logging-capabilities'
+
+    repositories {
+        mavenCentral()
+        maven { url("https://oss.sonatype.org/content/repositories/snapshots") }
+        // Needed for old jackson implementation fixed libraries (used in Egeria)
+        maven {
+            url "https://maven.atlassian.com/3rdparty"
+        }
+        mavenLocal()
+    }
+
+    /*
+     * Dependency Management - to fix versions. Pick up maven build settings for now
+     */
+
+    ext {
+        egeriaversion = '3.15-SNAPSHOT'
+        slf4jVersion = '1.7.36'
+        jacksonVersion = '2.13.3'
+        jupiterVersion = '5.9.0'
+        httpclientVersion = '4.5.13'
+        springwebVersion = '5.3.19'
+    }
+
+    dependencies {
+        // This applies constraints so that we use same dependency versions as egeria
+        implementation enforcedPlatform("org.odpi.egeria:egeria:${egeriaversion}")
+
+        // These constraints apply to direct and indirect dependencies, in addition
+        // to the versions specified by enforcedPlatform (in dependency below)
+        constraints {
+            // test dependencies
+            testCompileOnly "org.junit.jupiter:junit-jupiter-api:${jupiterVersion}"
+            testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${jupiterVersion}"
+
+            compileOnly "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+            compileOnly "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
+            compileOnly "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
+
+        }
+
+        // These are dependencies we include IN ALL PROJECTS (try to be selective)
+        testCompileOnly 'org.junit.jupiter:junit-jupiter-api'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+
+        compileOnly "com.fasterxml.jackson.core:jackson-databind"
+        compileOnly "com.fasterxml.jackson.core:jackson-annotations"
+        compileOnly "com.fasterxml.jackson.core:jackson-core"
+    }
+
+    // Jacoco version for code coverage
+    jacoco {
+        toolVersion = "0.8.8"
+    }
+
+    // Allow for tests to be run in all projects
+    test {
+        useJUnitPlatform()
+    }
+
+    // Fixes java compile flags & options for plugin
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+        sourceCompatibility = "11"
+        targetCompatibility = "11"
+        options.compilerArgs << "-Xlint:all"
+        options.incremental = true
+        options.fork = true
+        options.failOnError = true
+    }
+
+    // Probably duplicate but leave as proven
+    java {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+        withJavadocJar()
+        withSourcesJar()
+    }
+
+    // Tasks to help in finding dependency chains
+    task printAllDependencies(type: DependencyReportTask) {}
+    task printSubDependencies(type: DependencyReportTask) {}
+    task findDependency(type: DependencyInsightReportTask) {}
+
+    // ensures we pick up the very latest snapshots when built
+    configurations.all {
+        // Recommended if using snapshots, so that we don't cache (as they may change frequently)
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    }
+
+    // For later java versions this is recommended - keep conditional in case we want to build on 8
+    javadoc {
+        if (JavaVersion.current().isJava9Compatible()) {
+            options.addBooleanOption('html5', true)
+        }
+    }
+
+}
+// top level project settings
+
+// Project information
+    group = 'org.odpi.egeria'
+    version = '3.10-SNAPSHOT'
+    ext.name = 'Egeria API Samples'
+    description = 'Egeria Samples showing various API calls'
+
+
+    // but allow to fail - warning only - configure only in root, applies to subprojects
+    // For production code we'd want this to be clean
+    dependencyAnalysis {
+        issues {
+            all {
+                onAny {
+                    severity('warn')
+                }
+            }
+        }
+    }
+
+
+// Always run dependency check
+build.dependsOn("buildHealth")
+
+
