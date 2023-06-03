@@ -26,8 +26,8 @@ import java.util.Set;
  */
 public class ServerOps
 {
-    private String platformURLRoot;
-    private String clientUserId;
+    private final String platformURLRoot;
+    private final String clientUserId;
 
 
     /**
@@ -177,7 +177,7 @@ public class ServerOps
         {
             IntegrationDaemon client = new IntegrationDaemon(clientUserId, platformURLRoot);
 
-            List<IntegrationServiceSummary> serviceSummaries = client.getIntegrationDaemonStatus(clientUserId);
+            List<IntegrationServiceSummary> serviceSummaries = client.getIntegrationServicesSummaries(clientUserId);
 
             if (serviceSummaries != null)
             {

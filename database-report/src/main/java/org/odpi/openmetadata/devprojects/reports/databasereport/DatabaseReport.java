@@ -293,7 +293,7 @@ public class DatabaseReport
                                                true,
                                                databaseSchemaElement.getElementHeader().getGUID(),
                                                databaseSchemaElement.getDatabaseSchemaProperties().getQualifiedName(),
-                                               databaseSchemaElement.getDatabaseSchemaProperties().getDisplayName(),
+                                               databaseSchemaElement.getDatabaseSchemaProperties().getName(),
                                                databaseSchemaElement.getDatabaseSchemaProperties().getDescription());
 
                     displayTables(report, indentLevel + 1, databaseSchemaElement.getElementHeader().getGUID());

@@ -15,6 +15,7 @@ dependencies {
     implementation "org.odpi.egeria:data-manager-client"
     implementation "org.odpi.egeria:platform-services-client"
     implementation "org.odpi.egeria:http-helper"
+    compileOnly 'com.fasterxml.jackson.core:jackson-annotations'
     runtimeOnly 'ch.qos.logback:logback-classic'
 }
 

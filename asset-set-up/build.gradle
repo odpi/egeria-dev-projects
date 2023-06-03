@@ -10,17 +10,27 @@ plugins {
 
 dependencies {
     implementation "org.odpi.egeria:open-connector-framework"
+    implementation "org.odpi.egeria:open-integration-framework"
     implementation "org.odpi.egeria:asset-consumer-client"
+    implementation "org.odpi.egeria:asset-consumer-api"
     implementation "org.odpi.egeria:asset-manager-client"
+    implementation "org.odpi.egeria:asset-manager-api"
     implementation "org.odpi.egeria:asset-owner-client"
+    implementation "org.odpi.egeria:asset-owner-api"
     implementation "org.odpi.egeria:community-profile-api"
     implementation "org.odpi.egeria:community-profile-client"
+    implementation "org.odpi.egeria:data-manager-api"
     implementation "org.odpi.egeria:data-manager-client"
+    implementation "org.odpi.egeria:digital-architecture-api"
     implementation "org.odpi.egeria:digital-architecture-client"
     implementation "org.odpi.egeria:governance-program-api"
     implementation "org.odpi.egeria:governance-program-client"
+    implementation "org.odpi.egeria:it-infrastructure-api"
     implementation "org.odpi.egeria:it-infrastructure-client"
+    implementation "org.odpi.egeria:platform-services-api"
     implementation "org.odpi.egeria:platform-services-client"
+    implementation "org.odpi.egeria:ocf-metadata-api"
+    implementation "org.odpi.egeria:ocf-metadata-client"
     implementation "org.odpi.egeria:http-helper"
     runtimeOnly 'ch.qos.logback:logback-classic'
     compileOnly 'com.fasterxml.jackson.core:jackson-annotations'

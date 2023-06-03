@@ -10,14 +10,17 @@ plugins {
 
 dependencies {
     implementation project(":egeria-report-utilities")
-    implementation "org.odpi.egeria:open-connector-framework"
-    implementation "org.odpi.egeria:repository-services-apis"
-    implementation "org.odpi.egeria:repository-services-client"
-    implementation "org.odpi.egeria:admin-services-api"
-    implementation "org.odpi.egeria:admin-services-client"
-    implementation "org.odpi.egeria:platform-services-api"
-    implementation "org.odpi.egeria:platform-services-client"
-    implementation "org.odpi.egeria:http-helper"
+    compileOnly 'org.odpi.egeria:audit-log-framework'
+    compileOnly 'org.odpi.egeria:open-connector-framework'
+    compileOnly "org.odpi.egeria:repository-services-apis"
+    compileOnly "org.odpi.egeria:ffdc-services"
+    compileOnly "org.odpi.egeria:repository-services-client"
+    compileOnly "org.odpi.egeria:admin-services-api"
+    compileOnly "org.odpi.egeria:admin-services-client"
+    compileOnly "org.odpi.egeria:platform-services-api"
+    compileOnly "org.odpi.egeria:platform-services-client"
+    compileOnly "org.odpi.egeria:http-helper"
+    compileOnly "com.fasterxml.jackson.core:jackson-annotations"
     runtimeOnly 'ch.qos.logback:logback-classic'
 }
 

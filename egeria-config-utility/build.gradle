@@ -9,13 +9,15 @@ plugins {
 }
 
 dependencies {
+    implementation "org.odpi.egeria:audit-log-framework"
     implementation "org.odpi.egeria:open-connector-framework"
+    implementation "org.odpi.egeria:open-integration-framework"
+    implementation "org.odpi.egeria:ffdc-services"
     implementation "org.odpi.egeria:repository-services-apis"
     implementation "org.odpi.egeria:admin-services-api"
     implementation "org.odpi.egeria:admin-services-client"
     implementation "org.odpi.egeria:platform-services-client"
     implementation "org.odpi.egeria:http-helper"
-    implementation 'org.odpi.egeria:ffdc-services:3.15-SNAPSHOT'
     runtimeOnly 'ch.qos.logback:logback-classic'
 }
 

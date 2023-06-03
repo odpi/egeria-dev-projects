@@ -336,7 +336,7 @@ public class AssetLookUp
                 System.out.print("| " + assetUniverse.getGUID());
                 System.out.print(" | " + assetUniverse.getQualifiedName());
                 System.out.print(" | " + assetUniverse.getDisplayName());
-                System.out.print(" | " + assetUniverse.getDescription());
+                System.out.print(" | " + assetUniverse.getResourceDescription());
                 System.out.println(" |");
             }
         }
@@ -368,7 +368,8 @@ public class AssetLookUp
                 System.out.println("   " + assetUniverse.getType().getTypeName() + " inherits from " + assetUniverse.getType().getSuperTypeNames());
                 System.out.println("   qualifiedName: " + assetUniverse.getQualifiedName());
                 System.out.println("   displayName: " + assetUniverse.getDisplayName());
-                System.out.println("   description: " + assetUniverse.getDescription());
+                System.out.println("   resourceName: " + assetUniverse.getResourceName());
+                System.out.println("   description: " + assetUniverse.getResourceDescription());
 
                 /*
                  * The ownership determines who is responsible for the digital resource and its metadata.
@@ -385,7 +386,7 @@ public class AssetLookUp
                 List<String>       zoneMembership = assetUniverse.getZoneMembership();
                 if (zoneMembership == null)
                 {
-                    System.out.println("   zone membership: all zones" + assetUniverse.getDescription());
+                    System.out.println("   zone membership: all zones" + assetUniverse.getResourceName());
                 }
                 else
                 {
@@ -684,11 +685,11 @@ public class AssetLookUp
 
 
     /**
-     * Main program that controls the operation of the platform report.  The parameters are passed space separated.
+     * Main program that controls lookup of the asset.  The parameters are passed space separated.
      * The  parameters are used to override the report's default values. If mode is set to "interactive"
      * the caller is prompted for a command.  Otherwise, it is assumed to be a guid
      *
-     * @param args 1. service platform URL root, 2. client userId, 3. mode/guid
+     * @param args 0. server name, 1. service platform URL root, 2. client userId, 3. mode/guid
      */
     public static void main(String[] args)
     {

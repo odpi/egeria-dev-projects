@@ -44,7 +44,6 @@ allprojects {
         maven {
             url "https://maven.atlassian.com/3rdparty"
         }
-        mavenLocal()
     }
 
     /*
@@ -52,7 +51,7 @@ allprojects {
      */
 
     ext {
-        egeriaversion = '3.15'
+        egeriaVersion = '4.0'
         slf4jVersion = '1.7.36'
         jacksonVersion = '2.13.3'
         jupiterVersion = '5.9.0'
@@ -62,28 +61,7 @@ allprojects {
 
     dependencies {
         // This applies constraints so that we use same dependency versions as egeria
-        implementation enforcedPlatform("org.odpi.egeria:egeria:${egeriaversion}")
-
-        // These constraints apply to direct and indirect dependencies, in addition
-        // to the versions specified by enforcedPlatform (in dependency below)
-        constraints {
-            // test dependencies
-            testCompileOnly "org.junit.jupiter:junit-jupiter-api:${jupiterVersion}"
-            testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${jupiterVersion}"
-
-            compileOnly "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
-            compileOnly "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
-            compileOnly "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
-
-        }
-
-        // These are dependencies we include IN ALL PROJECTS (try to be selective)
-        testCompileOnly 'org.junit.jupiter:junit-jupiter-api'
-        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-
-        compileOnly "com.fasterxml.jackson.core:jackson-databind"
-        compileOnly "com.fasterxml.jackson.core:jackson-annotations"
-        compileOnly "com.fasterxml.jackson.core:jackson-core"
+        implementation platform("org.odpi.egeria:egeria:${egeriaVersion}")
     }
 
     // Jacoco version for code coverage
@@ -96,24 +74,22 @@ allprojects {
         useJUnitPlatform()
     }
 
-    // Fixes java compile flags & options for plugin
+    // compile flags
     tasks.withType(JavaCompile) {
+        options.release = 17
         options.encoding = 'UTF-8'
-        sourceCompatibility = "11"
-        targetCompatibility = "11"
-        options.compilerArgs << "-Xlint:all"
         options.incremental = true
-        options.fork = true
         options.failOnError = true
+        options.compilerArgs << "-Xlint:all" << "-Xmaxerrs" << "1000" << "-Xmaxwarns" << "1000"
     }
+
 
     // Probably duplicate but leave as proven
     java {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
         withJavadocJar()
         withSourcesJar()
     }
+
 
     // Tasks to help in finding dependency chains
     task printAllDependencies(type: DependencyReportTask) {}

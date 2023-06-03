@@ -6,7 +6,9 @@
 
 dependencies {
     implementation "org.odpi.egeria:open-connector-framework"
+    implementation "org.odpi.egeria:audit-log-framework"
     implementation "org.odpi.egeria:repository-services-apis"
+    compileOnly 'com.fasterxml.jackson.core:jackson-annotations'
 }
 
 description = 'Event Display Audit Log Store Connector.'

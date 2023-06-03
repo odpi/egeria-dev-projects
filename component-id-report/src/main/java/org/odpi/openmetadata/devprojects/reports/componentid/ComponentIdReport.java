@@ -92,6 +92,8 @@ public class ComponentIdReport
 
     /**
      * This runs the sample
+     *
+     * @throws IOException unable to write report
      */
     public void run() throws IOException
     {

@@ -329,7 +329,7 @@ public class EgeriaPlatformReport
             }
 
             /*
-             * Now all of the details about the servers is assembled, it can be printed out.
+             * Now all the details about the servers is assembled, it can be printed out.
              */
             for (OMAGServerDetails serverDetails : serverDetailsMap.values())
             {
@@ -871,9 +871,9 @@ public class EgeriaPlatformReport
 
 
             /**
-             * Set up the user Id assigned to this service.
+             * Set up the user id assigned to this service.
              *
-             * @param serviceUserId user Id
+             * @param serviceUserId user id
              */
             void setServiceUserId(String serviceUserId)
             {

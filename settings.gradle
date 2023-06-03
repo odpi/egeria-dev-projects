@@ -21,6 +21,7 @@ pluginManagement {
         id 'de.jjohannes.java-ecosystem-capabilities' version '0.4'
     }
 }
+
 rootProject.name = 'egeria-dev-projects'
 
 include(':asset-deploy')
@@ -34,16 +35,3 @@ include(':egeria-ops-utility')
 include(':egeria-platform-report')
 include(':egeria-report-utilities')
 include(':event-display-audit-log-connector')
-
-
-project(':asset-deploy').projectDir = file('asset-deploy')
-project(':asset-look-up').projectDir = file('asset-look-up')
-project(':asset-set-up').projectDir = file('asset-set-up')
-project(':component-id-report').projectDir = file('component-id-report')
-project(':database-report').projectDir = file('database-report')
-project(':egeria-config-utility').projectDir = file('egeria-config-utility')
-project(':egeria-infrastructure-catalog-connector').projectDir = file('egeria-infrastructure-catalog-connector')
-project(':egeria-ops-utility').projectDir = file('egeria-ops-utility')
-project(':egeria-platform-report').projectDir = file('egeria-platform-report')
-project(':egeria-report-utilities').projectDir = file('egeria-report-utilities')
-project(':event-display-audit-log-connector').projectDir = file('event-display-audit-log-connector')
