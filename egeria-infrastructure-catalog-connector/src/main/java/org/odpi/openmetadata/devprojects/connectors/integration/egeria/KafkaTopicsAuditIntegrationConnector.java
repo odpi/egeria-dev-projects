@@ -30,6 +30,9 @@ public class KafkaTopicsAuditIntegrationConnector extends EgeriaInfrastructureIn
     private static final String eventBrokerPlatformName = "Apache Kafka Server";
 
 
+    /**
+     * Default constructor
+     */
     public KafkaTopicsAuditIntegrationConnector()
     {
         super.platformName= eventBrokerPlatformName;

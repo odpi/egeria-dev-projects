@@ -3,6 +3,7 @@
 package org.odpi.openmetadata.devprojects.utilities.assetsetup;
 
 import org.odpi.openmetadata.accessservices.assetconsumer.client.AssetConsumer;
+import org.odpi.openmetadata.accessservices.assetmanager.client.exchange.ExternalAssetManagerClient;
 import org.odpi.openmetadata.accessservices.assetowner.client.CSVFileAssetOwner;
 import org.odpi.openmetadata.accessservices.communityprofile.client.OrganizationManagement;
 import org.odpi.openmetadata.accessservices.datamanager.client.DatabaseManagerClient;
@@ -10,7 +11,6 @@ import org.odpi.openmetadata.accessservices.datamanager.client.ExternalReference
 import org.odpi.openmetadata.accessservices.digitalarchitecture.client.ConnectionManager;
 import org.odpi.openmetadata.accessservices.digitalarchitecture.client.LocationManager;
 import org.odpi.openmetadata.accessservices.communityprofile.properties.ActorProfileProperties;
-import org.odpi.openmetadata.accessservices.assetmanager.client.ExternalAssetManagerClient;
 import org.odpi.openmetadata.accessservices.digitalarchitecture.client.ReferenceDataManager;
 import org.odpi.openmetadata.accessservices.governanceprogram.client.GovernanceZoneManager;
 import org.odpi.openmetadata.accessservices.governanceprogram.properties.GovernanceZoneProperties;
@@ -54,9 +54,9 @@ public class AssetSetUp
 
     private AssetConsumer                  assetConsumerClient            = null;
     private CSVFileAssetOwner              csvOnboardingClient            = null;
-    private OrganizationManagement         organizationManagement         = null;
-    private ExternalAssetManagerClient     externalAssetManagerClient     = null;
-    private DatabaseManagerClient          databaseManagerClient          = null;
+    private OrganizationManagement         organizationManagement     = null;
+    private ExternalAssetManagerClient     externalAssetManagerClient = null;
+    private DatabaseManagerClient          databaseManagerClient      = null;
     private ExternalReferenceManagerClient externalReferenceManagerClient = null;
     private ConnectionManager              connectionManager              = null;
     private LocationManager                locationManager                = null;

@@ -5,7 +5,7 @@ package org.odpi.openmetadata.devprojects.connectors.integration.egeria;
 
 import org.odpi.openmetadata.frameworks.auditlog.AuditLogReportingComponent;
 import org.odpi.openmetadata.frameworks.connectors.properties.beans.ConnectorType;
-import org.odpi.openmetadata.governanceservers.integrationdaemonservices.connectors.IntegrationConnectorProvider;
+import org.odpi.openmetadata.frameworks.integration.connectors.IntegrationConnectorProvider;
 
 
 /**

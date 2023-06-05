@@ -6,6 +6,7 @@
 dependencies {
     implementation "org.odpi.egeria:open-connector-framework"
     implementation "org.odpi.egeria:ffdc-services"
+    compileOnly "com.fasterxml.jackson.core:jackson-annotations"
 }
 
 description = 'Provide methods to display text to the screen and creates a markdown equivalent report file.'
