@@ -241,7 +241,7 @@ public abstract class EgeriaInfrastructureIntegrationConnectorBase extends Infra
      * @throws ConnectorCheckedException something failed in the super class
      */
     @Override
-    public void disconnect() throws ConnectorCheckedException
+    public synchronized void disconnect() throws ConnectorCheckedException
     {
         final String methodName = "disconnect";
 
