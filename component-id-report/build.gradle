@@ -14,6 +14,7 @@ dependencies {
     implementation "org.odpi.egeria:repository-services-apis"
     implementation "org.odpi.egeria:admin-services-api"
     implementation "org.odpi.egeria:integration-daemon-services-registration"
+    compileOnly 'com.fasterxml.jackson.core:jackson-annotations'
     runtimeOnly "org.odpi.egeria:cohort-registry-file-store-connector"
     runtimeOnly "org.odpi.egeria:open-metadata-archive-file-connector"
     runtimeOnly "org.odpi.egeria:open-metadata-archive-directory-connector"

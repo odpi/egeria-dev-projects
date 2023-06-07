@@ -9,6 +9,7 @@ plugins {
 }
 
 dependencies {
+    implementation "org.odpi.egeria:open-connector-framework"
     implementation "org.odpi.egeria:integration-daemon-services-api"
     implementation "org.odpi.egeria:integration-daemon-services-client"
     implementation "org.odpi.egeria:admin-services-api"
@@ -16,6 +17,7 @@ dependencies {
     implementation "org.odpi.egeria:platform-services-client"
     implementation "org.odpi.egeria:http-helper"
     runtimeOnly 'ch.qos.logback:logback-classic'
+    compileOnly "com.fasterxml.jackson.core:jackson-annotations"
 }
 
 description = 'Simple commands to start and stop OMAG Servers.'

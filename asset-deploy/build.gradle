@@ -10,6 +10,7 @@ plugins {
 
 dependencies {
     implementation "org.odpi.egeria:open-connector-framework"
+    implementation "org.odpi.egeria:ocf-metadata-client"
     implementation "org.odpi.egeria:it-infrastructure-api"
     implementation "org.odpi.egeria:it-infrastructure-client"
     implementation "org.odpi.egeria:admin-services-api"

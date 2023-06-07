@@ -7,6 +7,7 @@
 dependencies {
     implementation "org.odpi.egeria:audit-log-framework"
     implementation "org.odpi.egeria:open-connector-framework"
+    implementation "org.odpi.egeria:open-integration-framework"
     implementation "org.odpi.egeria:repository-services-apis"
     implementation "org.odpi.egeria:infrastructure-integrator-api"
     implementation "org.odpi.egeria:it-infrastructure-api"
@@ -15,9 +16,14 @@ dependencies {
     implementation "org.odpi.egeria:admin-services-client"
     implementation "org.odpi.egeria:platform-services-client"
     implementation "org.apache.kafka:kafka-clients"
-    runtimeOnly 'ch.qos.logback:logback-classic'
+    compileOnly 'com.fasterxml.jackson.core:jackson-annotations'
+    testCompileOnly 'com.fasterxml.jackson.core:jackson-annotations'
     testImplementation 'org.odpi.egeria:open-metadata-ut'
     testImplementation 'org.testng:testng'
+    // These are dependencies we include IN ALL PROJECTS (try to be selective)
+    testCompileOnly 'org.junit.jupiter:junit-jupiter-api'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+
 }
 
 description = 'Scavenges information from an Egeria deployment to catalog the platforms, servers, services and connectors.'

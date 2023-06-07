@@ -26,6 +26,9 @@ import org.odpi.openmetadata.frameworks.auditlog.messagesets.ExceptionMessageSet
  */
 public enum EgeriaInfrastructureConnectorErrorCode implements ExceptionMessageSet
 {
+    /**
+     * The {0} integration connector received an unexpected exception {1} when cataloguing Egeria infrastructure; the error message was: {2}
+     */
     UNEXPECTED_EXCEPTION(500, "EGERIA-INFRASTRUCTURE-CONNECTORS-500-001",
              "The {0} integration connector received an unexpected exception {1} when cataloguing Egeria infrastructure; the error message was: {2}",
              "The connector is unable to catalog one or more topics.",

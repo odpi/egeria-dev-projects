@@ -70,6 +70,9 @@ public class EgeriaCataloguerIntegrationConnector extends EgeriaInfrastructureIn
     private Map<String, String> connectorProviderToAsset = new HashMap<>();
 
 
+    /**
+     * Default constructor
+     */
     public EgeriaCataloguerIntegrationConnector()
     {
         super();
